@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+@if (this.Context.Session.GetString("tipoUsuario") == "1")
+{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    <div class="container-fluid">
+        <div class="row" style="display:flex;justify-content:center; align-content:center">
+            <iframe title="OIM-FINAL" width="1024" height="1060" src="https://app.powerbi.com/view?r=eyJrIjoiNDY4NDgwOTEtYmU0Mi00ODhhLTg4Y2YtNGZhZDA3YWFiNGQ2IiwidCI6IjAwYzQ4YTUwLWY0MWItNDg2YS1iYjNmLTliNjJjOTFmOWU2NyJ9&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
+    </div>
+}
+else if (this.Context.Session.GetString("tipoUsuario") == "2")
+{
+    Layout = "/Views/Shared/_LayoutAnalista.cshtml";
+    <div class="container-fluid">
+        <div class="row" style="display:flex;justify-content:center; align-content:center">
+            <iframe title="OIM-FINAL" width="1024" height="1060" src="https://app.powerbi.com/view?r=eyJrIjoiNDY4NDgwOTEtYmU0Mi00ODhhLTg4Y2YtNGZhZDA3YWFiNGQ2IiwidCI6IjAwYzQ4YTUwLWY0MWItNDg2YS1iYjNmLTliNjJjOTFmOWU2NyJ9&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
+    </div>
+
+}
+else if (this.Context.Session.GetString("tipoUsuario") == "3")
+{
+    Layout = "/Views/Shared/_LayoutGestor.cshtml";
+    <div class="container-fluid">
+        <div class="row" style="display:flex;justify-content:center; align-content:center">
+            <iframe title="OIM-FINAL" width="1024" height="1060" src="https://app.powerbi.com/view?r=eyJrIjoiNDY4NDgwOTEtYmU0Mi00ODhhLTg4Y2YtNGZhZDA3YWFiNGQ2IiwidCI6IjAwYzQ4YTUwLWY0MWItNDg2YS1iYjNmLTliNjJjOTFmOWU2NyJ9&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
+    </div>
+
+}
+else
+{
+    Layout = "/Views/Shared/_LayoutPublico.cshtml";
+    <div class="container-fluid">
+        <div class="row" style="display:flex;justify-content:center; align-content:center">
+            <iframe title="OIM-FINAL" width="1024" height="1060" src="https://app.powerbi.com/view?r=eyJrIjoiNDY4NDgwOTEtYmU0Mi00ODhhLTg4Y2YtNGZhZDA3YWFiNGQ2IiwidCI6IjAwYzQ4YTUwLWY0MWItNDg2YS1iYjNmLTliNjJjOTFmOWU2NyJ9&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
+    </div>
+}
+
+
+

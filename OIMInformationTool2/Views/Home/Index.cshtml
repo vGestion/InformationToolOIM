@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+}
+
+@if (this.Context.Session.GetString("tipoUsuario") == "1")
+{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    <img src="~/Resources/personas.jpg" alt="" class="img-fluid" style="max-width: 1200px" />
+}
+else if (this.Context.Session.GetString("tipoUsuario") == "2")
+{
+    Layout = "/Views/Shared/_LayoutAnalista.cshtml";
+    <img src="~/Resources/personas.jpg" alt="" class="img-fluid" style="max-width: 1200px" />
+}
+else if (this.Context.Session.GetString("tipoUsuario") == "3")
+{
+    Layout = "/Views/Shared/_LayoutGestor.cshtml";
+    <img src="~/Resources/personas.jpg" alt="" class="img-fluid" style="max-width: 1200px" />
+}
+else
+{
+    Layout = "/Views/Shared/_LayoutPublico.cshtml";
+    <img src="~/Resources/personas.jpg" alt="" class="img-fluid" style="max-width: 1200px" />
+}
