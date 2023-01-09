@@ -189,6 +189,7 @@ namespace OIMInformationTool2.Controllers
                     }                 
                         System.Diagnostics.Debug.WriteLine(u.RolId.ToString());
                         this.HttpContext.Session.SetString("usuario", u.Nombre!);
+                        this.HttpContext.Session.SetString("usuarioId", u.IdUsuario.ToString()!);
                         this.HttpContext.Session.SetString("tipoUsuario", u.RolId.ToString()!);
                         return RedirectToAction("Index", "Home");
                 }

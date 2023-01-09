@@ -1,5 +1,4 @@
-﻿using GemBox.Spreadsheet;
-using System.Data;
+﻿using System.Data;
 using System.Data.OleDb;
 
 namespace OIMInformationTool2.Utils
@@ -28,7 +27,7 @@ namespace OIMInformationTool2.Utils
             // Filling the dataset form Excel using OleDbAdapter
             DataSet data = new DataSet();
             adapter.Fill(data);
-            System.Diagnostics.Debug.WriteLine(data.Tables[0].Rows[0]);
+            System.Diagnostics.Debug.WriteLine(data.Tables[0].Rows[0][0]);
             // Closing the connection
             connection.Close();
             return data;

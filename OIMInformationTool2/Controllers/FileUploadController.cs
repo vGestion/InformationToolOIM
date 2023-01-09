@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OIMInformationTool2.Models;
 using OIMInformationTool2.Utils;
-using System.Runtime.InteropServices;
 
 namespace OIMInformationTool2.Controllers
 {
     public class FileUploadController : Controller
+
     {
         public IActionResult Index()
         {
@@ -25,21 +25,15 @@ namespace OIMInformationTool2.Controllers
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), formFile.FileName);
                     filePaths.Add(filePath);
 
-                    
-
                     using(var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        
+                    {                       
                         await formFile.CopyToAsync(stream);
-
                     }
                 }
             }
-            ExcelManager reader = new ExcelManager();
-            reader.readExcelSheet(filePaths[0]);
-            System.Diagnostics.Debug.WriteLine(filePaths.Count());
-            return RedirectToAction("Index","Nominal");
+            this.HttpContext.Session.SetString("archivo", filePaths[0]);
 
+            return RedirectToAction("InsertFromExcel","Nominal");
         }
     }
 }

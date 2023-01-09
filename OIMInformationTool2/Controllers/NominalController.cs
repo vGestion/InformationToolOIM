@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Data;
+using InformationToolOIM2.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
+using OIMInformationTool2.Utils;
 
 namespace OIMInformationTool2.Controllers
 {
@@ -204,6 +203,48 @@ namespace OIMInformationTool2.Controllers
         private bool NominalExists(int id)
         {
           return _context.Nominals.Any(e => e.IdNominal == id);
+        }
+
+        public async Task<ActionResult> InsertFromExcel()
+        {
+            string Path = this.HttpContext.Session.GetString("archivo");
+            // Reading information from excel sheet
+            ExcelManager reader = new ExcelManager();
+            DataSet data = reader.readExcelSheet(Path);
+
+            Random rnd = new Random();
+            // Inserting information into database
+            foreach (DataRow dr in data.Tables[0].Rows)
+            {
+                if (dr["ID_INDICADOR"].ToString() == "")
+                {
+                    break;
+                }
+
+                Finders find = new Finders();
+                Nominal nominal = new Nominal();
+
+                nominal.FechaAsistencia = DateTime.Parse(dr["FECHA_ASISTENCIA"].ToString());
+                nominal.FechaCorte = DateTime.Parse(dr["CORTE"].ToString()); 
+                nominal.Edad = (int)Convert.ToInt64(dr["EDAD"].ToString());
+                nominal.Discapacidad = find.DiscapacidadTranformer(dr["DISCAPACIDAD"].ToString());
+                nominal.Monto = Convert.ToDecimal(dr["MONTO_ECONOMICO"].ToString());          
+                nominal.FechaRegistro = DateTime.Now;
+                nominal.IndicadorId = dr["ID_INDICADOR"].ToString();
+                nominal.GeneroId = (int)Convert.ToInt64(dr["ID_GENERO"].ToString());
+                nominal.SexoId = find.IdFinderGenero(dr["SEXO"].ToString(),await _context.Generos.ToListAsync());
+                nominal.NacionalidadId = find.IdFinderNacionalidad(dr["NACIONALIDAD"].ToString(), await _context.Nacionalidads.ToListAsync());
+                nominal.CantonId = (int)Convert.ToInt64(dr["ID_CANTON"].ToString());
+                nominal.ProvinciaId = 2;
+                nominal.ParentezcoId = find.IdFinderParentezco(dr["PARENTEZCO"].ToString(),await _context.Parentezcos.ToListAsync());
+                nominal.CriterioMoviId = find.IdFinderCriterioMovilidad(dr["CRITERIO_MOVILIDAD"].ToString(), await _context.CriterioMovis.ToListAsync());
+                nominal.PeriodoId = 1;
+                nominal.UsuarioId = (int)Convert.ToInt64(HttpContext.Session.GetString("usuarioId"));  ;
+                nominal.IdNominal = rnd.Next(5000, 7000);
+
+                Create(nominal);
+            }
+            return RedirectToAction("Index");
         }
     }
 }
