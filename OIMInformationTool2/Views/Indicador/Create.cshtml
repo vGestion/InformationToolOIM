@@ -1,0 +1,75 @@
+﻿@model OIMInformationTool2.Models.Indicador
+
+@{
+    ViewData["Title"] = "Agregar";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Agregar</h1>
+
+<h4>Indicador</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdIndicador" class="control-label"></label>
+                <input asp-for="IdIndicador" class="form-control" />
+                <span asp-validation-for="IdIndicador" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FondoId" class="control-label"></label>
+                <select asp-for="FondoId" class ="form-control" asp-items="ViewBag.FondoId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meta" class="control-label"></label>
+                <input asp-for="Meta" class="form-control" />
+                <span asp-validation-for="Meta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OutputId" class="control-label"></label>
+                <select asp-for="OutputId" class ="form-control" asp-items="ViewBag.OutputId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroTotal" class="control-label"></label>
+                <input asp-for="NumeroTotal" class="form-control" />
+                <span asp-validation-for="NumeroTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CampoReferencia" class="control-label"></label>
+                <input asp-for="CampoReferencia" class="form-control" />
+                <span asp-validation-for="CampoReferencia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FormulaCalculo" class="control-label"></label>
+                <input asp-for="FormulaCalculo" class="form-control" />
+                <span asp-validation-for="FormulaCalculo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SectorId" class="control-label"></label>
+                <select asp-for="SectorId" class ="form-control" asp-items="ViewBag.SectorId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PeriodicidadId" class="control-label"></label>
+                <select asp-for="PeriodicidadId" class ="form-control" asp-items="ViewBag.PeriodicidadId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AreaOimId" class="control-label"></label>
+                <select asp-for="AreaOimId" class ="form-control" asp-items="ViewBag.AreaOimId" asp-labels="ViewBag.Descripcion"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Agregar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar a la lista</a>
+</div>

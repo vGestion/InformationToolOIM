@@ -1,0 +1,21 @@
+
+.text-b {
+    color: #0033A0;
+}
+
+.text-w{
+    color: #F2F2F2;
+}
+
+.bg-b {
+    background-color: #0033A0;
+}
+
+.dropdown-format {
+    background-color: #0033A0;
+    color:#F2F2F2;
+}
+
+.scrolling-wrapper {
+    overflow-x: auto;
+}

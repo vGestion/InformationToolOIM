@@ -1,0 +1,89 @@
+﻿@model IEnumerable<OIMInformationTool2.Models.Indicador>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista</h1>
+
+<p>
+    <a asp-action="Create">Agregar</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CampoReferencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormulaCalculo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AreaOim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fondo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Output)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Periodicidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sector)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Meta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CampoReferencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormulaCalculo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AreaOim.IdAreaOim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fondo.IdFondo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Output.IdOutput)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Periodicidad.IdPeriodo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sector.IdSector)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdIndicador">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdIndicador">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdIndicador">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

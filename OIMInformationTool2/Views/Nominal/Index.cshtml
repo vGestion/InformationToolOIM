@@ -1,0 +1,129 @@
+﻿@model IEnumerable<OIMInformationTool2.Models.Nominal>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista</h1>
+
+<p>
+    <a asp-action="Create">Agregar</a>
+</p>
+<div class="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaAsistencia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaCorte)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Edad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Discapacidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Monto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaRegistro)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CantonId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProvinciaId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CriterioMovi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Genero)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Indicador)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nacionalidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Parentezco)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Periodo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sexo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Usuario)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaAsistencia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCorte)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Edad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Discapacidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Monto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaRegistro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CantonId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProvinciaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CriterioMovi.IdCriterioMovi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genero.IdGenero)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Indicador.IdIndicador)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nacionalidad.IdNacionalidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Parentezco.IdParentezco)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Periodo.IdPeriodo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sexo.IdSexo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Usuario.IdUsuario)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdNominal">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.IdNominal">Detalles</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdNominal">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
