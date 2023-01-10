@@ -205,7 +205,7 @@ namespace OIMInformationTool2.Controllers
           return _context.Nominals.Any(e => e.IdNominal == id);
         }
 
-        public async Task<ActionResult> InsertFromExcel()
+        public ActionResult InsertFromExcel()
         {
             string Path = this.HttpContext.Session.GetString("archivo");
             // Reading information from excel sheet
@@ -232,17 +232,19 @@ namespace OIMInformationTool2.Controllers
                 nominal.FechaRegistro = DateTime.Now;
                 nominal.IndicadorId = dr["ID_INDICADOR"].ToString();
                 nominal.GeneroId = (int)Convert.ToInt64(dr["ID_GENERO"].ToString());
-                nominal.SexoId = find.IdFinderGenero(dr["SEXO"].ToString(),await _context.Generos.ToListAsync());
-                nominal.NacionalidadId = find.IdFinderNacionalidad(dr["NACIONALIDAD"].ToString(), await _context.Nacionalidads.ToListAsync());
+                nominal.SexoId = find.IdFinderGenero(dr["SEXO"].ToString(),_context.Generos.ToList());
+                nominal.NacionalidadId = find.IdFinderNacionalidad(dr["NACIONALIDAD"].ToString(), _context.Nacionalidads.ToList());
                 nominal.CantonId = (int)Convert.ToInt64(dr["ID_CANTON"].ToString());
                 nominal.ProvinciaId = 2;
-                nominal.ParentezcoId = find.IdFinderParentezco(dr["PARENTEZCO"].ToString(),await _context.Parentezcos.ToListAsync());
-                nominal.CriterioMoviId = find.IdFinderCriterioMovilidad(dr["CRITERIO_MOVILIDAD"].ToString(), await _context.CriterioMovis.ToListAsync());
+                nominal.ParentezcoId = find.IdFinderParentezco(dr["PARENTEZCO"].ToString(),_context.Parentezcos.ToList());
+                nominal.CriterioMoviId = find.IdFinderCriterioMovilidad(dr["CRITERIO_MOVILIDAD"].ToString(), _context.CriterioMovis.ToList());
                 nominal.PeriodoId = 1;
                 nominal.UsuarioId = (int)Convert.ToInt64(HttpContext.Session.GetString("usuarioId"));  ;
                 nominal.IdNominal = rnd.Next(5000, 7000);
+                System.Diagnostics.Debug.WriteLine(nominal);
+                _context.Add(nominal);
 
-                Create(nominal);
+                
             }
             return RedirectToAction("Index");
         }

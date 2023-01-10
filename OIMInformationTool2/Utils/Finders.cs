@@ -25,10 +25,12 @@ namespace InformationToolOIM2.Utils
                     id = cm.IdCriterioMovi;
                 }
             }
+            System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID********************");
             return id;
         }
         public int IdFinderGenero(String nombre, List<Genero> genero)
         {
+            
 
             int id = 999999;            
             foreach (Genero Gen in genero)
@@ -43,6 +45,7 @@ namespace InformationToolOIM2.Utils
                     id = Gen.IdGenero;
                 }
             }
+            System.Diagnostics.Debug.WriteLine(id.ToString()+" ENCONTRÉ EL ID********************");
             return id;
         }
         public int IdFinderNacionalidad(String nombre, List<Nacionalidad> nacionalidad)
@@ -64,7 +67,7 @@ namespace InformationToolOIM2.Utils
                 }
             }
 
-
+            System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID ********************");
             return id;
         }
         public int IdFinderParentezco(String nombre, List<Parentezco> parentezco)
@@ -84,6 +87,7 @@ namespace InformationToolOIM2.Utils
                     id = Par.IdParentezco;
                 }
             }
+            System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID********************");
             return id;
         }
         public bool DiscapacidadTranformer(String discapacidad)
