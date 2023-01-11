@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OIMInformationTool2.Models;
-using System.Diagnostics;
 
 namespace OIMInformationTool2.Controllers
 {
