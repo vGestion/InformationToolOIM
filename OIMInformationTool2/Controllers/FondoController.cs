@@ -47,7 +47,7 @@ namespace OIMInformationTool2.Controllers
         // GET: Fondo/Create
         public IActionResult Create()
         {
-            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "IdImplementador");
+            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion");
             return View();
         }
 
@@ -61,10 +61,11 @@ namespace OIMInformationTool2.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(fondo);
+                TempData["alertMessage"] = "Creado con éxito";
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "IdImplementador", fondo.ImplementadorId);
+            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion", fondo.ImplementadorId);
             return View(fondo);
         }
 
@@ -81,7 +82,7 @@ namespace OIMInformationTool2.Controllers
             {
                 return NotFound();
             }
-            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "IdImplementador", fondo.ImplementadorId);
+            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion", fondo.ImplementadorId);
             return View(fondo);
         }
 
@@ -102,6 +103,7 @@ namespace OIMInformationTool2.Controllers
                 try
                 {
                     _context.Update(fondo);
+                    TempData["alertMessage"] = "Editado con éxito";
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -117,7 +119,7 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "IdImplementador", fondo.ImplementadorId);
+            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion", fondo.ImplementadorId);
             return View(fondo);
         }
 
@@ -153,6 +155,7 @@ namespace OIMInformationTool2.Controllers
             if (fondo != null)
             {
                 _context.Fondos.Remove(fondo);
+                TempData["alertMessage"] = "Eliminado con éxito";
             }
             
             await _context.SaveChangesAsync();

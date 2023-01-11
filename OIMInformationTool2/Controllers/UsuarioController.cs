@@ -61,6 +61,7 @@ namespace OIMInformationTool2.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(usuario);
+                TempData["alertMessage"] = "Creado con éxito";
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -102,6 +103,7 @@ namespace OIMInformationTool2.Controllers
                 try
                 {
                     _context.Update(usuario);
+                    TempData["alertMessage"] = "Editado con éxito";
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -153,6 +155,7 @@ namespace OIMInformationTool2.Controllers
             if (usuario != null)
             {
                 _context.Usuarios.Remove(usuario);
+                TempData["alertMessage"] = "Eliminado con éxito";
             }
             
             await _context.SaveChangesAsync();
@@ -170,20 +173,20 @@ namespace OIMInformationTool2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UserLogin()
         {
-            System.Diagnostics.Debug.WriteLine("Aqui imprimo");
-
-            var oimContext = _context.Usuarios;
-            List<Usuario> users =await oimContext.ToListAsync();
+            List<Usuario> users =await _context.Usuarios.ToListAsync();
 
             string correo = Request.Form["Nombre"]!;
             string password = Request.Form["Passwrd"]!;
 
+            System.Diagnostics.Debug.WriteLine(correo);
+            
             foreach (Usuario u in users)
             {
-               
+                System.Diagnostics.Debug.WriteLine(password + " " + u.Passwrd);
+
                 if (correo == u.Correo)
                 {
-                    if(u.Passwrd!.Equals(password))
+                    if(password == u.Passwrd)
                     {
                         System.Diagnostics.Debug.WriteLine("ES IGUAL!!!!");
                     }                 
@@ -196,7 +199,5 @@ namespace OIMInformationTool2.Controllers
             }
             return RedirectToAction("Index", "Login");
         }
-
-
     }
 }

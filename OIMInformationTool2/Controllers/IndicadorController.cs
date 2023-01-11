@@ -51,11 +51,11 @@ namespace OIMInformationTool2.Controllers
         // GET: Indicador/Create
         public IActionResult Create()
         {
-            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "IdAreaOim");
-            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "IdFondo");
-            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "IdOutput");
-            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "IdPeriodo");
-            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "IdSector");
+            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "Descripcion");
+            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "Descripcion");
+            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion");
+            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "Descripcion");
+            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "Descripcion");
             return View();
         }
 
@@ -69,14 +69,15 @@ namespace OIMInformationTool2.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(indicador);
+                TempData["alertMessage"] = "Creado con éxito";
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "IdAreaOim", indicador.AreaOimId);
-            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "IdFondo", indicador.FondoId);
-            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "IdOutput", indicador.OutputId);
-            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "IdPeriodo", indicador.PeriodicidadId);
-            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "IdSector", indicador.SectorId);
+            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "Descripcion", indicador.AreaOimId);
+            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "Descripcion", indicador.FondoId);
+            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion", indicador.OutputId);
+            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "Descripcion", "IdPeriodo", indicador.PeriodicidadId);
+            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "Descripcion", indicador.SectorId);
             return View(indicador);
         }
 
@@ -93,11 +94,11 @@ namespace OIMInformationTool2.Controllers
             {
                 return NotFound();
             }
-            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "IdAreaOim", indicador.AreaOimId);
-            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "IdFondo", indicador.FondoId);
-            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "IdOutput", indicador.OutputId);
-            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "IdPeriodo", indicador.PeriodicidadId);
-            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "IdSector", indicador.SectorId);
+            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "Descripcion", indicador.AreaOimId);
+            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "Descripcion", indicador.FondoId);
+            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion", indicador.OutputId);
+            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "Descripcion", indicador.PeriodicidadId);
+            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "Descripcion", indicador.SectorId);
             return View(indicador);
         }
 
@@ -118,6 +119,7 @@ namespace OIMInformationTool2.Controllers
                 try
                 {
                     _context.Update(indicador);
+                    TempData["alertMessage"] = "Editado con éxito";
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -133,11 +135,11 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "IdAreaOim", indicador.AreaOimId);
-            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "IdFondo", indicador.FondoId);
-            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "IdOutput", indicador.OutputId);
-            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "IdPeriodo", indicador.PeriodicidadId);
-            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "IdSector", indicador.SectorId);
+            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "Descripcion", indicador.AreaOimId);
+            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "Descripcion", indicador.FondoId);
+            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion", indicador.OutputId);
+            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "Descripcion", indicador.PeriodicidadId);
+            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "Descripcion", indicador.SectorId);
             return View(indicador);
         }
 
@@ -177,6 +179,7 @@ namespace OIMInformationTool2.Controllers
             if (indicador != null)
             {
                 _context.Indicadors.Remove(indicador);
+                TempData["alertMessage"] = "Eliminado con éxito";
             }
             
             await _context.SaveChangesAsync();

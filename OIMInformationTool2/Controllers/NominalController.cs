@@ -20,7 +20,15 @@ namespace OIMInformationTool2.Controllers
         // GET: Nominal
         public async Task<IActionResult> Index()
         {
-            var oimContext = _context.Nominals.Include(n => n.CriterioMovi).Include(n => n.Genero).Include(n => n.Indicador).Include(n => n.Nacionalidad).Include(n => n.Parentezco).Include(n => n.Periodo).Include(n => n.Sexo).Include(n => n.Usuario);
+            var oimContext = _context.Nominals
+                .Include(n => n.CriterioMovi)
+                .Include(n => n.Genero)
+                .Include(n => n.Indicador)
+                .Include(n => n.Nacionalidad)
+                .Include(n => n.Parentezco)
+                .Include(n => n.Periodo)
+                .Include(n => n.Sexo)
+                .Include(n => n.Usuario);
             return View(await oimContext.ToListAsync());
         }
 
@@ -53,14 +61,14 @@ namespace OIMInformationTool2.Controllers
         // GET: Nominal/Create
         public IActionResult Create()
         {
-            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "IdCriterioMovi");
-            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "IdGenero");
-            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "IdIndicador");
-            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "IdNacionalidad");
-            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "IdParentezco");
-            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "IdPeriodo");
-            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "IdSexo");
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario");
+            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "Descripcion");
+            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "Descripcion");
+            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "Descripcion");
+            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "Descripcion");
+            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "Descripcion");
+            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "Descripcion");
+            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "Descripcion");
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre");
             return View();
         }
 
@@ -77,14 +85,14 @@ namespace OIMInformationTool2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "IdCriterioMovi", nominal.CriterioMoviId);
-            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "IdGenero", nominal.GeneroId);
-            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "IdIndicador", nominal.IndicadorId);
-            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "IdNacionalidad", nominal.NacionalidadId);
-            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "IdParentezco", nominal.ParentezcoId);
-            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "IdPeriodo", nominal.PeriodoId);
-            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "IdSexo", nominal.SexoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", nominal.UsuarioId);
+            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "Descripcion", nominal.CriterioMoviId);
+            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "Descripcion", nominal.GeneroId);
+            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "Descripcion", nominal.IndicadorId);
+            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "Descripcion", nominal.NacionalidadId);
+            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "Descripcion", nominal.ParentezcoId);
+            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "Descripcion", nominal.PeriodoId);
+            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "Descripcion", nominal.SexoId);
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", nominal.UsuarioId);
             return View(nominal);
         }
 
@@ -101,14 +109,14 @@ namespace OIMInformationTool2.Controllers
             {
                 return NotFound();
             }
-            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "IdCriterioMovi", nominal.CriterioMoviId);
-            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "IdGenero", nominal.GeneroId);
-            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "IdIndicador", nominal.IndicadorId);
-            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "IdNacionalidad", nominal.NacionalidadId);
-            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "IdParentezco", nominal.ParentezcoId);
-            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "IdPeriodo", nominal.PeriodoId);
-            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "IdSexo", nominal.SexoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", nominal.UsuarioId);
+            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "Descripcion", nominal.CriterioMoviId);
+            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "Descripcion", nominal.GeneroId);
+            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "Descripcion", nominal.IndicadorId);
+            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "Descripcion", nominal.NacionalidadId);
+            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "Descripcion", nominal.ParentezcoId);
+            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "Descripcion", nominal.PeriodoId);
+            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "Descripcion", nominal.SexoId);
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", nominal.UsuarioId);
             return View(nominal);
         }
 
@@ -144,14 +152,14 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "IdCriterioMovi", nominal.CriterioMoviId);
-            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "IdGenero", nominal.GeneroId);
-            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "IdIndicador", nominal.IndicadorId);
-            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "IdNacionalidad", nominal.NacionalidadId);
-            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "IdParentezco", nominal.ParentezcoId);
-            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "IdPeriodo", nominal.PeriodoId);
-            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "IdSexo", nominal.SexoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", nominal.UsuarioId);
+            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "Descripcion", nominal.CriterioMoviId);
+            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "Descripcion", nominal.GeneroId);
+            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "Descripcion", nominal.IndicadorId);
+            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "Descripcion", nominal.NacionalidadId);
+            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "Descripcion", nominal.ParentezcoId);
+            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "Descripcion", nominal.PeriodoId);
+            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "Descripcion", nominal.SexoId);
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", nominal.UsuarioId);
             return View(nominal);
         }
 
@@ -211,41 +219,82 @@ namespace OIMInformationTool2.Controllers
             // Reading information from excel sheet
             ExcelManager reader = new ExcelManager();
             DataSet data = reader.readExcelSheet(Path);
-
+            Boolean valido = true;
             Random rnd = new Random();
             // Inserting information into database
+            int i = 0;
             foreach (DataRow dr in data.Tables[0].Rows)
             {
-                if (dr["ID_INDICADOR"].ToString() == "")
+                i = i + 1;
+                if ((dr["ID_INDICADOR"].ToString() == "") && (dr["FECHA_ASISTENCIA"].ToString() == "") && (dr["CORTE"].ToString() == "") && (dr["EDAD"].ToString() == "") && (dr["DISCAPACIDAD"].ToString() == "") && (dr["MONTO_ECONOMICO"].ToString() == "")
+                    && (dr["ID_GENERO"].ToString() == "") && (dr["SEXO"].ToString() == "") && (dr["NACIONALIDAD"].ToString() == "") && (dr["ID_CANTON"].ToString() == "") && (dr["PARENTEZCO"].ToString() == "") && (dr["CRITERIO_MOVILIDAD"].ToString() == ""))
                 {
+                    
                     break;
                 }
 
-                Finders find = new Finders();
-                Nominal nominal = new Nominal();
-
-                nominal.FechaAsistencia = DateTime.Parse(dr["FECHA_ASISTENCIA"].ToString());
-                nominal.FechaCorte = DateTime.Parse(dr["CORTE"].ToString()); 
-                nominal.Edad = (int)Convert.ToInt64(dr["EDAD"].ToString());
-                nominal.Discapacidad = find.DiscapacidadTranformer(dr["DISCAPACIDAD"].ToString());
-                nominal.Monto = Convert.ToDecimal(dr["MONTO_ECONOMICO"].ToString());          
-                nominal.FechaRegistro = DateTime.Now;
-                nominal.IndicadorId = dr["ID_INDICADOR"].ToString();
-                nominal.GeneroId = (int)Convert.ToInt64(dr["ID_GENERO"].ToString());
-                nominal.SexoId = find.IdFinderGenero(dr["SEXO"].ToString(),_context.Generos.ToList());
-                nominal.NacionalidadId = find.IdFinderNacionalidad(dr["NACIONALIDAD"].ToString(), _context.Nacionalidads.ToList());
-                nominal.CantonId = (int)Convert.ToInt64(dr["ID_CANTON"].ToString());
-                nominal.ProvinciaId = 2;
-                nominal.ParentezcoId = find.IdFinderParentezco(dr["PARENTEZCO"].ToString(),_context.Parentezcos.ToList());
-                nominal.CriterioMoviId = find.IdFinderCriterioMovilidad(dr["CRITERIO_MOVILIDAD"].ToString(), _context.CriterioMovis.ToList());
-                nominal.PeriodoId = 1;
-                nominal.UsuarioId = (int)Convert.ToInt64(HttpContext.Session.GetString("usuarioId"));  ;
-                nominal.IdNominal = rnd.Next(5000, 7000);
-                System.Diagnostics.Debug.WriteLine(nominal);
-                _context.Add(nominal);
-
-                
+                if ((dr["ID_INDICADOR"].ToString() == "") | (dr["FECHA_ASISTENCIA"].ToString() == "") | (dr["CORTE"].ToString() == "") | (dr["EDAD"].ToString() == "") | (dr["DISCAPACIDAD"].ToString() == "") | (dr["MONTO_ECONOMICO"].ToString() == "")
+                    | (dr["ID_GENERO"].ToString() == "") | (dr["SEXO"].ToString() == "") | (dr["NACIONALIDAD"].ToString() == "") | (dr["ID_CANTON"].ToString() == "") | (dr["PARENTEZCO"].ToString() == "") | (dr["CRITERIO_MOVILIDAD"].ToString() == "")) 
+                {
+                    valido = false;
+                    TempData["alertMessage"] = "Error en la fila: "+i;
+                    break;
+                }
+            
             }
+
+
+            if(valido == true)
+            {
+                foreach (DataRow dr in data.Tables[0].Rows)
+                {
+                    if (dr["ID_INDICADOR"].ToString() == "")
+                    {
+
+                        break;
+                    }
+
+                    Finders find = new Finders();
+                    Nominal nominal = new Nominal();
+
+                    nominal.FechaAsistencia = DateTime.Parse(dr["FECHA_ASISTENCIA"].ToString());
+                    nominal.FechaCorte = DateTime.Parse(dr["CORTE"].ToString());
+                    nominal.Edad = (int)Convert.ToInt64(dr["EDAD"].ToString());
+                    nominal.Discapacidad = find.DiscapacidadTranformer(dr["DISCAPACIDAD"].ToString());
+                    nominal.Monto = Convert.ToDecimal(dr["MONTO_ECONOMICO"].ToString());
+                    nominal.FechaRegistro = DateTime.Now;
+                    nominal.IndicadorId = dr["ID_INDICADOR"].ToString();
+                    nominal.GeneroId = (int)Convert.ToInt64(dr["ID_GENERO"].ToString());
+                    nominal.SexoId = find.IdFinderGenero(dr["SEXO"].ToString(), _context.Generos.ToList());
+                    nominal.ParentezcoId = find.IdFinderParentezco(dr["PARENTEZCO"].ToString(), _context.Parentezcos.ToList());
+                    nominal.NacionalidadId = find.IdFinderNacionalidad(dr["NACIONALIDAD"].ToString(), _context.Nacionalidads.ToList());
+                    nominal.CantonId = (int)Convert.ToInt64(dr["ID_CANTON"].ToString().Substring(0,2));
+                    nominal.ProvinciaId = (int)Convert.ToInt64(dr["ID_CANTON"].ToString().Substring(2,2));
+                    nominal.CriterioMoviId = find.IdFinderCriterioMovilidad(dr["CRITERIO_MOVILIDAD"].ToString(), _context.CriterioMovis.ToList());
+                    nominal.PeriodoId = _context.Periodos.FromSql($"Select * from dbo.Periodo where ID_periodo = 1").ToList()[0].IdPeriodo;
+                    nominal.UsuarioId = (int)Convert.ToInt64(HttpContext.Session.GetString("usuarioId")); ;
+                    nominal.IdNominal = rnd.Next(5000, 150000);
+                    
+                    _context.Add(nominal);
+                    _context.SaveChanges();
+                }
+
+                TempData["alertMessage"] = "Los datos se han ingresado correctamente";
+
+            }
+
+            if (System.IO.File.Exists(Path))
+            {
+                try
+                {
+                    System.IO.File.Delete(Path);
+                }
+                catch (System.IO.IOException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+
             return RedirectToAction("Index");
         }
     }

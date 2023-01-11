@@ -17,5 +17,8 @@
 }
 
 .scrolling-wrapper {
-    overflow-x: auto;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    max-height: 1000px
 }
+

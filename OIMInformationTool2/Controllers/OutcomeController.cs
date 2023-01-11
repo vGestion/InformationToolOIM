@@ -59,6 +59,7 @@ namespace OIMInformationTool2.Controllers
             {
                 _context.Add(outcome);
                 await _context.SaveChangesAsync();
+                TempData["alertMessage"] = "Creado con éxito";
                 return RedirectToAction(nameof(Index));
             }
             return View(outcome);
@@ -97,6 +98,7 @@ namespace OIMInformationTool2.Controllers
                 try
                 {
                     _context.Update(outcome);
+                    TempData["alertMessage"] = "Editado con éxito";
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -146,6 +148,7 @@ namespace OIMInformationTool2.Controllers
             if (outcome != null)
             {
                 _context.Outcomes.Remove(outcome);
+                TempData["alertMessage"] = "Eliminado con éxito";
             }
             
             await _context.SaveChangesAsync();

@@ -58,6 +58,7 @@ namespace OIMInformationTool2.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(periodicidad);
+                TempData["alertMessage"] = "Creado con éxito";
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -97,6 +98,7 @@ namespace OIMInformationTool2.Controllers
                 try
                 {
                     _context.Update(periodicidad);
+                    TempData["alertMessage"] = "Editado con éxito";
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -146,6 +148,7 @@ namespace OIMInformationTool2.Controllers
             if (periodicidad != null)
             {
                 _context.Periodicidads.Remove(periodicidad);
+                TempData["alertMessage"] = "Eliminado con éxito";
             }
             
             await _context.SaveChangesAsync();

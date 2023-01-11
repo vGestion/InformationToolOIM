@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
@@ -47,7 +43,7 @@ namespace OIMInformationTool2.Controllers
         // GET: Canton/Create
         public IActionResult Create()
         {
-            ViewData["ProvinciaId"] = new SelectList(_context.Provincia, "IdProvincia", "IdProvincia");
+            ViewData["ProvinciaId"] = new SelectList(_context.Provincia, "IdProvincia", "Descripcion");
             return View();
         }
 
@@ -61,6 +57,7 @@ namespace OIMInformationTool2.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(canton);
+                TempData["alertMessage"] = "Creado con éxito";
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -102,6 +99,7 @@ namespace OIMInformationTool2.Controllers
                 try
                 {
                     _context.Update(canton);
+                    TempData["alertMessage"] = "Editado con éxito";
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -153,6 +151,7 @@ namespace OIMInformationTool2.Controllers
             if (canton != null)
             {
                 _context.Cantons.Remove(canton);
+                TempData["alertMessage"] = "Eliminado con éxito";
             }
             
             await _context.SaveChangesAsync();

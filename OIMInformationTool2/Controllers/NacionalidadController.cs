@@ -58,6 +58,7 @@ namespace OIMInformationTool2.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(nacionalidad);
+                TempData["alertMessage"] = "Creado con éxito";
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -96,6 +97,7 @@ namespace OIMInformationTool2.Controllers
             {
                 try
                 {
+                    TempData["alertMessage"] = "Editado con éxito";
                     _context.Update(nacionalidad);
                     await _context.SaveChangesAsync();
                 }
@@ -145,6 +147,7 @@ namespace OIMInformationTool2.Controllers
             var nacionalidad = await _context.Nacionalidads.FindAsync(id);
             if (nacionalidad != null)
             {
+                TempData["alertMessage"] = "Eliminado con éxito";
                 _context.Nacionalidads.Remove(nacionalidad);
             }
             

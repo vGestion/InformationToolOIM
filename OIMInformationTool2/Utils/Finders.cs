@@ -1,20 +1,21 @@
 ﻿using OIMInformationTool2.Models;
-
+using OIMInformationTool2.Utils;
 
 namespace InformationToolOIM2.Utils
 {
     public class Finders
     {
+        TextCleaning helper = new TextCleaning();
         
         // Finding the corresponding id to the description that came in the excel.
         public int IdFinderCriterioMovilidad(String nombre, List<CriterioMovi> CriterioM)
         {
-           
+           nombre = helper.ReplaceAccents(nombre);
             int id = 999999;
             foreach (CriterioMovi cm in CriterioM)
             {
                 //If the giving gender is in the table, return its id and break the loop
-                if (cm.Descripcion.Contains(nombre.ToUpper()))
+                if (cm.Descripcion.Contains(nombre))
                 {
                     id = cm.IdCriterioMovi;
                     break;
@@ -30,13 +31,13 @@ namespace InformationToolOIM2.Utils
         }
         public int IdFinderGenero(String nombre, List<Genero> genero)
         {
-            
+            nombre = helper.ReplaceAccents(nombre);
 
             int id = 999999;            
             foreach (Genero Gen in genero)
             {
                 //If the giving gender is in the table, return its id and break the loop
-                if (Gen.Descripcion.Contains(nombre.ToUpper())) {
+                if (Gen.Descripcion.Contains(nombre)) {
                     id = Gen.IdGenero;
                     break;
                 } else if (Gen.Descripcion.Contains("OTRO"))
@@ -50,12 +51,12 @@ namespace InformationToolOIM2.Utils
         }
         public int IdFinderNacionalidad(String nombre, List<Nacionalidad> nacionalidad)
         {
-
+            nombre = helper.ReplaceAccents(nombre);
             int id = 999999;
             foreach (Nacionalidad Nac in nacionalidad)
             {
                 //If the giving gender is in the table, return its id and break the loop
-                if (Nac.Descripcion.Contains(nombre.ToUpper()))
+                if (Nac.Descripcion.Contains(nombre))
                 {
                     id = Nac.IdNacionalidad;
                     break;
@@ -73,10 +74,11 @@ namespace InformationToolOIM2.Utils
         public int IdFinderParentezco(String nombre, List<Parentezco> parentezco)
         {
             int id = 999999;
+            nombre = helper.ReplaceAccents(nombre);
             foreach (Parentezco Par in parentezco)
             {
                 //If the giving gender is in the table, return its id and break the loop
-                if (Par.Descripcion.Contains(nombre.ToUpper()))
+                if (Par.Descripcion.Contains(nombre))
                 {
                     id = Par.IdParentezco;
                     break;

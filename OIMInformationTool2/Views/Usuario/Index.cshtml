@@ -4,11 +4,24 @@
     ViewData["Title"] = "Index";
 }
 
+@if (TempData["alertMessage"] != null)
+{
+        <br/>
+        <div class="alert alert-secondary alert-dismissible fade show" role="alert" >
+            <strong>@TempData["alertMessage"]</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    TempData["alertMessage"] = null;
+}
+
 <h1>Lista</h1>
 
 <p>
     <a asp-action="Create">Agregar</a>
 </p>
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -18,9 +31,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Correo)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Passwrd)
-            </th>
+           
             <th>
                 @Html.DisplayNameFor(model => model.Rol)
             </th>

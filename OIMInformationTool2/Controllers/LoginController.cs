@@ -23,9 +23,6 @@ namespace OIMInformationTool2.Controllers
 
         public ActionResult LoginP()
         {
-           
-
-
             this.HttpContext.Session.SetString("user", "admin");
             this.HttpContext.Session.SetString("tipoUsuario", "3");
             return RedirectToAction("Index", "Home");

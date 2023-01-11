@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
 
@@ -58,6 +53,7 @@ namespace OIMInformationTool2.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(periodo);
+                TempData["alertMessage"] = "Creado con éxito";
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -96,6 +92,7 @@ namespace OIMInformationTool2.Controllers
             {
                 try
                 {
+                    TempData["alertMessage"] = "Editado con éxito";
                     _context.Update(periodo);
                     await _context.SaveChangesAsync();
                 }
@@ -146,6 +143,7 @@ namespace OIMInformationTool2.Controllers
             if (periodo != null)
             {
                 _context.Periodos.Remove(periodo);
+                TempData["alertMessage"] = "Eliminado con éxito";
             }
             
             await _context.SaveChangesAsync();

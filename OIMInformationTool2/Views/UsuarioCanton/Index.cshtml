@@ -1,0 +1,47 @@
+﻿@model IEnumerable<OIMInformationTool2.Models.UsuarioCanton>
+
+@{
+    ViewData["Title"] = "Lista";
+}
+
+<h1>Lista</h1>
+
+<p>
+    <a asp-action="Create">Asignar</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CantonId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProvinciaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantonId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProvinciaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario.IdUsuario)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdUsuarioCanto">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdUsuarioCanto">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdUsuarioCanto">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
