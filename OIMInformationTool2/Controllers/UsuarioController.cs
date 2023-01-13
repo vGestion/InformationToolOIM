@@ -181,7 +181,7 @@ namespace OIMInformationTool2.Controllers
             {
                 System.Diagnostics.Debug.WriteLine(password + " " + u.Passwrd);
 
-                if ((correo == u.Correo)&&(u.Activo == true))
+                if ((correo == u.Correo))
                 {
                     if (password == u.Passwrd)
                     {
