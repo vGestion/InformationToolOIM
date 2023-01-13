@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InformationToolOIM2.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using InformationToolOIM2.Models;
 using OIMInformationTool2.Models;
 
 namespace OIMInformationTool2.Controllers
@@ -22,7 +22,7 @@ namespace OIMInformationTool2.Controllers
         // GET: AreaOim
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AreaOims.ToListAsync());
+              return View(await _context.AreaOims.ToListAsync());
         }
 
         // GET: AreaOim/Details/5
@@ -141,21 +141,21 @@ namespace OIMInformationTool2.Controllers
         {
             if (_context.AreaOims == null)
             {
-                return Problem("Entity set 'Oim2Context.AreaOims'  is null.");
+                return Problem("Entity set 'OimContext.AreaOims'  is null.");
             }
             var areaOim = await _context.AreaOims.FindAsync(id);
             if (areaOim != null)
             {
                 _context.AreaOims.Remove(areaOim);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AreaOimExists(int id)
         {
-            return _context.AreaOims.Any(e => e.IdAreaOim == id);
+          return _context.AreaOims.Any(e => e.IdAreaOim == id);
         }
     }
 }

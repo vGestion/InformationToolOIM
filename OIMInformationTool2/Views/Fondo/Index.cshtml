@@ -21,9 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.FechaFin)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Donante)
-            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -39,9 +37,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FechaFin)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Donante.IdDonante)
-            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdFondo">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.IdFondo">Detalles</a> |

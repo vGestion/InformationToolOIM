@@ -274,7 +274,7 @@ namespace OIMInformationTool2.Controllers
                     nominal.CriterioMoviId = find.IdFinderCriterioMovilidad(dr["CRITERIO_MOVILIDAD"].ToString(), _context.CriterioMovis.ToList());
                     nominal.PeriodoId = _context.Periodos.FromSql($"Select * from dbo.Periodo where ID_periodo = 1").ToList()[0].IdPeriodo;
                     nominal.UsuarioId = (int)Convert.ToInt64(HttpContext.Session.GetString("usuarioId")); ;
-                    nominal.IdNominal = rnd.Next(5000, 150000);
+                    nominal.IdNominal = rnd.Next(5000, 2040000);
                     
                     _context.Add(nominal);
                     _context.SaveChanges();

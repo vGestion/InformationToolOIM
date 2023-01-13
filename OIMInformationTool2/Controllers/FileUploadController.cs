@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OIMInformationTool2.Models;
-using OIMInformationTool2.Utils;
 
 namespace OIMInformationTool2.Controllers
 {
@@ -22,7 +20,7 @@ namespace OIMInformationTool2.Controllers
             {
                 if(formFile.Length > 0)
                 {
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), formFile.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Files", formFile.FileName);
                     filePaths.Add(filePath);
 
                     using(var stream = new FileStream(filePath, FileMode.Create))

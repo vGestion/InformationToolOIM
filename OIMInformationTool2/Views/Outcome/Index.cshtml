@@ -33,15 +33,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AreaOim.IdAreaOim)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Objetivo.IdObjetivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sector.IdSector)
-            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdOutcome">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.IdOutcome">Detalles</a> |
