@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
 using OIMInformationTool2.Utils;
 
+
 namespace OIMInformationTool2.Controllers
 {
     public class NominalController : Controller

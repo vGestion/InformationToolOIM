@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using InformationToolOIM2.Models;
 using Microsoft.EntityFrameworkCore;
+using OIMInformationTool2.Models;
 
 namespace OIMInformationTool2.Models;
 
@@ -21,6 +23,8 @@ public partial class OimContext : DbContext
 
     public virtual DbSet<CriterioMovi> CriterioMovis { get; set; }
 
+    public virtual DbSet<Donante> Donantes { get; set; }
+
     public virtual DbSet<Fondo> Fondos { get; set; }
 
     public virtual DbSet<Genero> Generos { get; set; }
@@ -32,6 +36,8 @@ public partial class OimContext : DbContext
     public virtual DbSet<Nacionalidad> Nacionalidads { get; set; }
 
     public virtual DbSet<Nominal> Nominals { get; set; }
+
+    public virtual DbSet<Objetivo> Objetivos { get; set; }
 
     public virtual DbSet<Outcome> Outcomes { get; set; }
 
@@ -56,9 +62,8 @@ public partial class OimContext : DbContext
     public virtual DbSet<UsuarioCanton> UsuarioCantons { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=oim2;Integrated Security=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -113,6 +118,20 @@ public partial class OimContext : DbContext
                 .IsFixedLength();
         });
 
+        modelBuilder.Entity<Donante>(entity =>
+        {
+            entity.HasKey(e => e.IdDonante);
+
+            entity.ToTable("Donante");
+
+            entity.Property(e => e.IdDonante)
+                .ValueGeneratedNever()
+                .HasColumnName("ID_donante");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(200)
+                .IsFixedLength();
+        });
+
         modelBuilder.Entity<Fondo>(entity =>
         {
             entity.HasKey(e => e.IdFondo).HasName("XPKProyecto");
@@ -126,20 +145,17 @@ public partial class OimContext : DbContext
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.DonanteId).HasColumnName("Donante_id");
             entity.Property(e => e.FechaFin)
                 .HasColumnType("datetime")
                 .HasColumnName("Fecha_fin");
             entity.Property(e => e.FechaInicio)
                 .HasColumnType("datetime")
                 .HasColumnName("Fecha_inicio");
-            entity.Property(e => e.ImplementadorId)
-                .HasMaxLength(15)
-                .IsFixedLength()
-                .HasColumnName("Implementador_id");
 
-            entity.HasOne(d => d.Implementador).WithMany(p => p.Fondos)
-                .HasForeignKey(d => d.ImplementadorId)
-                .HasConstraintName("R_33");
+            entity.HasOne(d => d.Donante).WithMany(p => p.Fondos)
+                .HasForeignKey(d => d.DonanteId)
+                .HasConstraintName("R_59");
         });
 
         modelBuilder.Entity<Genero>(entity =>
@@ -163,8 +179,7 @@ public partial class OimContext : DbContext
             entity.ToTable("Implementador");
 
             entity.Property(e => e.IdImplementador)
-                .HasMaxLength(15)
-                .IsFixedLength()
+                .ValueGeneratedNever()
                 .HasColumnName("ID_implementador");
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(50)
@@ -181,7 +196,6 @@ public partial class OimContext : DbContext
                 .HasMaxLength(15)
                 .IsFixedLength()
                 .HasColumnName("ID_indicador");
-            entity.Property(e => e.AreaOimId).HasColumnName("Area_oim_id");
             entity.Property(e => e.CampoReferencia)
                 .HasMaxLength(200)
                 .IsFixedLength()
@@ -197,6 +211,7 @@ public partial class OimContext : DbContext
                 .HasMaxLength(200)
                 .IsFixedLength()
                 .HasColumnName("Formula_calculo");
+            entity.Property(e => e.ImplementadorId).HasColumnName("Implementador_id");
             entity.Property(e => e.Meta)
                 .HasMaxLength(10)
                 .IsFixedLength();
@@ -209,15 +224,14 @@ public partial class OimContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("Output_Id");
             entity.Property(e => e.PeriodicidadId).HasColumnName("Periodicidad_id");
-            entity.Property(e => e.SectorId).HasColumnName("Sector_id");
-
-            entity.HasOne(d => d.AreaOim).WithMany(p => p.Indicadors)
-                .HasForeignKey(d => d.AreaOimId)
-                .HasConstraintName("R_4");
 
             entity.HasOne(d => d.Fondo).WithMany(p => p.Indicadors)
                 .HasForeignKey(d => d.FondoId)
                 .HasConstraintName("R_32");
+
+            entity.HasOne(d => d.Implementador).WithMany(p => p.Indicadors)
+                .HasForeignKey(d => d.ImplementadorId)
+                .HasConstraintName("R_56");
 
             entity.HasOne(d => d.Output).WithMany(p => p.Indicadors)
                 .HasForeignKey(d => d.OutputId)
@@ -226,10 +240,6 @@ public partial class OimContext : DbContext
             entity.HasOne(d => d.Periodicidad).WithMany(p => p.Indicadors)
                 .HasForeignKey(d => d.PeriodicidadId)
                 .HasConstraintName("R_40");
-
-            entity.HasOne(d => d.Sector).WithMany(p => p.Indicadors)
-                .HasForeignKey(d => d.SectorId)
-                .HasConstraintName("R_41");
         });
 
         modelBuilder.Entity<Nacionalidad>(entity =>
@@ -313,6 +323,21 @@ public partial class OimContext : DbContext
                 .HasConstraintName("R_14");
         });
 
+        modelBuilder.Entity<Objetivo>(entity =>
+        {
+            entity.HasKey(e => e.IdObjetivo);
+
+            entity.ToTable("Objetivo");
+
+            entity.Property(e => e.IdObjetivo)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("ID_objetivo");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(200)
+                .IsFixedLength();
+        });
+
         modelBuilder.Entity<Outcome>(entity =>
         {
             entity.HasKey(e => e.IdOutcome);
@@ -323,10 +348,28 @@ public partial class OimContext : DbContext
                 .HasMaxLength(15)
                 .IsFixedLength()
                 .HasColumnName("ID_outcome");
+            entity.Property(e => e.AreaOimId).HasColumnName("Area_oim_id");
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(800)
                 .IsFixedLength()
                 .HasColumnName("descripcion");
+            entity.Property(e => e.ObjetivoId)
+                .HasMaxLength(50)
+                .IsFixedLength()
+                .HasColumnName("Objetivo_id");
+            entity.Property(e => e.SectorId).HasColumnName("Sector_id");
+
+            entity.HasOne(d => d.AreaOim).WithMany(p => p.Outcomes)
+                .HasForeignKey(d => d.AreaOimId)
+                .HasConstraintName("R_55");
+
+            entity.HasOne(d => d.Objetivo).WithMany(p => p.Outcomes)
+                .HasForeignKey(d => d.ObjetivoId)
+                .HasConstraintName("R_57");
+
+            entity.HasOne(d => d.Sector).WithMany(p => p.Outcomes)
+                .HasForeignKey(d => d.SectorId)
+                .HasConstraintName("R_58");
         });
 
         modelBuilder.Entity<Output>(entity =>

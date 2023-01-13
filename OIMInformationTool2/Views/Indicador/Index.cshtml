@@ -1,27 +1,15 @@
 ﻿@model IEnumerable<OIMInformationTool2.Models.Indicador>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista";
 }
 
-@if (TempData["alertMessage"] != null)
-{
-        <br/>
-        <div class="alert alert-secondary alert-dismissible fade show" role="alert" >
-            <strong>@TempData["alertMessage"]</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    TempData["alertMessage"] = null;
-}
-
-<h1>Lista</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Agregar</a>
+    <a asp-action="Create">Create New</a>
 </p>
-<table class="table table-striped">
+<table class="table">
     <thead>
         <tr>
             <th>
@@ -40,19 +28,16 @@
                 @Html.DisplayNameFor(model => model.FormulaCalculo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AreaOim)
+                @Html.DisplayNameFor(model => model.Fondo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fondo)
+                @Html.DisplayNameFor(model => model.Implementador)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Output)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Periodicidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sector)
             </th>
             <th></th>
         </tr>
@@ -76,10 +61,10 @@
                 @Html.DisplayFor(modelItem => item.FormulaCalculo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AreaOim.IdAreaOim)
+                @Html.DisplayFor(modelItem => item.Fondo.IdFondo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Fondo.IdFondo)
+                @Html.DisplayFor(modelItem => item.Implementador.IdImplementador)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Output.IdOutput)
@@ -88,10 +73,7 @@
                 @Html.DisplayFor(modelItem => item.Periodicidad.IdPeriodo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Sector.IdSector)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdIndicador">Editar</a> |
+                
                 <a asp-action="Details" asp-route-id="@item.IdIndicador">Detalles</a> |
                 <a asp-action="Delete" asp-route-id="@item.IdIndicador">Eliminar</a>
             </td>

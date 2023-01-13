@@ -1,14 +1,14 @@
-﻿@model OIMInformationTool2.Models.AreaOim
+﻿@model OIMInformationTool2.Models.Objetivo
 
 @{
-    ViewData["Title"] = "Eliminar";
+    ViewData["Title"] = "Delete";
 }
 
 <h1>Eliminar</h1>
 
-<h3>¿Está seguro de eliminar?</h3>
+<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>AreaOim</h4>
+    <h4>Objetivo</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -20,8 +20,8 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="IdAreaOim" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-        <a asp-action="Index">Regresar a la lista</a>
+        <input type="hidden" asp-for="IdObjetivo" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
     </form>
 </div>

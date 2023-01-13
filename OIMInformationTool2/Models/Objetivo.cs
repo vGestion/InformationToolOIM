@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace InformationToolOIM2.Models;
+namespace OIMInformationTool2.Models;
 
-public partial class AreaOim
+public partial class Objetivo
 {
-    public int IdAreaOim { get; set; }
+    public string IdObjetivo { get; set; } = null!;
 
     public string? Descripcion { get; set; }
 

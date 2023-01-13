@@ -21,8 +21,8 @@ namespace OIMInformationTool2.Controllers
         // GET: Usuario
         public async Task<IActionResult> Index()
         {
-            var oimContext = _context.Usuarios.Include(u => u.Rol);
-            return View(await oimContext.ToListAsync());
+            var oim2Context = _context.Usuarios.Include(u => u.Rol);
+            return View(await oim2Context.ToListAsync());
         }
 
         // GET: Usuario/Details/5
@@ -47,7 +47,7 @@ namespace OIMInformationTool2.Controllers
         // GET: Usuario/Create
         public IActionResult Create()
         {
-            ViewData["RolId"] = new SelectList(_context.Rols, "IdRol", "IdRol");
+            ViewData["RolId"] = new SelectList(_context.Rols, "IdRol", "Descripcion");
             return View();
         }
 
@@ -56,16 +56,15 @@ namespace OIMInformationTool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdUsuario,Nombre,Correo,RolId,Passwrd")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("IdUsuario,Nombre,Correo,RolId,Activo,Passwrd")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(usuario);
-                TempData["alertMessage"] = "Creado con éxito";
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RolId"] = new SelectList(_context.Rols, "IdRol", "IdRol", usuario.RolId);
+            ViewData["RolId"] = new SelectList(_context.Rols, "IdRol", "Descripcion", usuario.RolId);
             return View(usuario);
         }
 
@@ -82,7 +81,7 @@ namespace OIMInformationTool2.Controllers
             {
                 return NotFound();
             }
-            ViewData["RolId"] = new SelectList(_context.Rols, "IdRol", "IdRol", usuario.RolId);
+            ViewData["RolId"] = new SelectList(_context.Rols, "IdRol", "Descripcion", usuario.RolId);
             return View(usuario);
         }
 
@@ -91,7 +90,7 @@ namespace OIMInformationTool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdUsuario,Nombre,Correo,RolId,Passwrd")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("IdUsuario,Nombre,Correo,RolId,Activo,Passwrd")] Usuario usuario)
         {
             if (id != usuario.IdUsuario)
             {
@@ -103,7 +102,6 @@ namespace OIMInformationTool2.Controllers
                 try
                 {
                     _context.Update(usuario);
-                    TempData["alertMessage"] = "Editado con éxito";
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -119,7 +117,7 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RolId"] = new SelectList(_context.Rols, "IdRol", "IdRol", usuario.RolId);
+            ViewData["RolId"] = new SelectList(_context.Rols, "IdRol", "Descripcion", usuario.RolId);
             return View(usuario);
         }
 
@@ -149,22 +147,21 @@ namespace OIMInformationTool2.Controllers
         {
             if (_context.Usuarios == null)
             {
-                return Problem("Entity set 'OimContext.Usuarios'  is null.");
+                return Problem("Entity set 'Oim2Context.Usuarios'  is null.");
             }
             var usuario = await _context.Usuarios.FindAsync(id);
             if (usuario != null)
             {
                 _context.Usuarios.Remove(usuario);
-                TempData["alertMessage"] = "Eliminado con éxito";
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UsuarioExists(int id)
         {
-          return _context.Usuarios.Any(e => e.IdUsuario == id);
+            return _context.Usuarios.Any(e => e.IdUsuario == id);
         }
 
         //****************************CREATED METHODS*******************************//
@@ -173,31 +170,33 @@ namespace OIMInformationTool2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UserLogin()
         {
-            List<Usuario> users =await _context.Usuarios.ToListAsync();
+            List<Usuario> users = await _context.Usuarios.ToListAsync();
 
             string correo = Request.Form["Nombre"]!;
             string password = Request.Form["Passwrd"]!;
 
             System.Diagnostics.Debug.WriteLine(correo);
-            
+
             foreach (Usuario u in users)
             {
                 System.Diagnostics.Debug.WriteLine(password + " " + u.Passwrd);
 
-                if (correo == u.Correo)
+                if ((correo == u.Correo)&&(u.Activo == true))
                 {
-                    if(password == u.Passwrd)
+                    if (password == u.Passwrd)
                     {
                         System.Diagnostics.Debug.WriteLine("ES IGUAL!!!!");
-                    }                 
-                        System.Diagnostics.Debug.WriteLine(u.RolId.ToString());
-                        this.HttpContext.Session.SetString("usuario", u.Nombre!);
-                        this.HttpContext.Session.SetString("usuarioId", u.IdUsuario.ToString()!);
-                        this.HttpContext.Session.SetString("tipoUsuario", u.RolId.ToString()!);
-                        return RedirectToAction("Index", "Home");
+                    }
+                    System.Diagnostics.Debug.WriteLine(u.RolId.ToString());
+                    this.HttpContext.Session.SetString("usuario", u.Nombre!);
+                    this.HttpContext.Session.SetString("usuarioId", u.IdUsuario.ToString()!);
+                    this.HttpContext.Session.SetString("tipoUsuario", u.RolId.ToString()!);
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return RedirectToAction("Index", "Login");
         }
     }
 }
+    
+

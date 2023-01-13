@@ -12,7 +12,27 @@
 
   <ItemGroup>
     <None Include="Views\Dashboard\Index.cshtml" />
+    <None Include="Views\Fondo\Create.cshtml" />
+    <None Include="Views\Fondo\Delete.cshtml" />
+    <None Include="Views\Fondo\Details.cshtml" />
+    <None Include="Views\Fondo\Edit.cshtml" />
+    <None Include="Views\Fondo\Index.cshtml" />
+    <None Include="Views\Implementador\Create.cshtml" />
+    <None Include="Views\Implementador\Delete.cshtml" />
+    <None Include="Views\Implementador\Details.cshtml" />
+    <None Include="Views\Implementador\Edit.cshtml" />
+    <None Include="Views\Implementador\Index.cshtml" />
     <None Include="Views\Login\index.cshtml" />
+    <None Include="Views\Outcome\Create.cshtml" />
+    <None Include="Views\Outcome\Delete.cshtml" />
+    <None Include="Views\Outcome\Details.cshtml" />
+    <None Include="Views\Outcome\Edit.cshtml" />
+    <None Include="Views\Outcome\Index.cshtml" />
+    <None Include="Views\Usuario\Create.cshtml" />
+    <None Include="Views\Usuario\Delete.cshtml" />
+    <None Include="Views\Usuario\Details.cshtml" />
+    <None Include="Views\Usuario\Edit.cshtml" />
+    <None Include="Views\Usuario\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

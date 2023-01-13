@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
 
+
 namespace OIMInformationTool2.Controllers
 {
     public class OutcomeController : Controller
@@ -21,7 +22,8 @@ namespace OIMInformationTool2.Controllers
         // GET: Outcome
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Outcomes.ToListAsync());
+            var oim2Context = _context.Outcomes.Include(o => o.AreaOim).Include(o => o.Objetivo).Include(o => o.Sector);
+            return View(await oim2Context.ToListAsync());
         }
 
         // GET: Outcome/Details/5
@@ -33,6 +35,9 @@ namespace OIMInformationTool2.Controllers
             }
 
             var outcome = await _context.Outcomes
+                .Include(o => o.AreaOim)
+                .Include(o => o.Objetivo)
+                .Include(o => o.Sector)
                 .FirstOrDefaultAsync(m => m.IdOutcome == id);
             if (outcome == null)
             {
@@ -45,6 +50,9 @@ namespace OIMInformationTool2.Controllers
         // GET: Outcome/Create
         public IActionResult Create()
         {
+            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "Descripcion");
+            ViewData["ObjetivoId"] = new SelectList(_context.Objetivos, "IdObjetivo", "Descripcion");
+            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "Descripcion");
             return View();
         }
 
@@ -53,15 +61,17 @@ namespace OIMInformationTool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdOutcome,Descripcion")] Outcome outcome)
+        public async Task<IActionResult> Create([Bind("IdOutcome,AreaOimId,SectorId,ObjetivoId,Descripcion")] Outcome outcome)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(outcome);
                 await _context.SaveChangesAsync();
-                TempData["alertMessage"] = "Creado con éxito";
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "Descripcion", outcome.AreaOimId);
+            ViewData["ObjetivoId"] = new SelectList(_context.Objetivos, "IdObjetivo", "Descripcion", outcome.ObjetivoId);
+            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "Descripcion", outcome.SectorId);
             return View(outcome);
         }
 
@@ -78,6 +88,9 @@ namespace OIMInformationTool2.Controllers
             {
                 return NotFound();
             }
+            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "Descripcion", outcome.AreaOimId);
+            ViewData["ObjetivoId"] = new SelectList(_context.Objetivos, "IdObjetivo", "Descripcion", outcome.ObjetivoId);
+            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "Descripcion", outcome.SectorId);
             return View(outcome);
         }
 
@@ -86,7 +99,7 @@ namespace OIMInformationTool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("IdOutcome,Descripcion")] Outcome outcome)
+        public async Task<IActionResult> Edit(string id, [Bind("IdOutcome,AreaOimId,SectorId,ObjetivoId,Descripcion")] Outcome outcome)
         {
             if (id != outcome.IdOutcome)
             {
@@ -98,7 +111,6 @@ namespace OIMInformationTool2.Controllers
                 try
                 {
                     _context.Update(outcome);
-                    TempData["alertMessage"] = "Editado con éxito";
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -114,6 +126,9 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AreaOimId"] = new SelectList(_context.AreaOims, "IdAreaOim", "Descripcion", outcome.AreaOimId);
+            ViewData["ObjetivoId"] = new SelectList(_context.Objetivos, "IdObjetivo", "Descripcion", outcome.ObjetivoId);
+            ViewData["SectorId"] = new SelectList(_context.Sectors, "IdSector", "Descripcion", outcome.SectorId);
             return View(outcome);
         }
 
@@ -126,6 +141,9 @@ namespace OIMInformationTool2.Controllers
             }
 
             var outcome = await _context.Outcomes
+                .Include(o => o.AreaOim)
+                .Include(o => o.Objetivo)
+                .Include(o => o.Sector)
                 .FirstOrDefaultAsync(m => m.IdOutcome == id);
             if (outcome == null)
             {
@@ -142,22 +160,21 @@ namespace OIMInformationTool2.Controllers
         {
             if (_context.Outcomes == null)
             {
-                return Problem("Entity set 'OimContext.Outcomes'  is null.");
+                return Problem("Entity set 'Oim2Context.Outcomes'  is null.");
             }
             var outcome = await _context.Outcomes.FindAsync(id);
             if (outcome != null)
             {
                 _context.Outcomes.Remove(outcome);
-                TempData["alertMessage"] = "Eliminado con éxito";
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool OutcomeExists(string id)
         {
-          return _context.Outcomes.Any(e => e.IdOutcome == id);
+            return _context.Outcomes.Any(e => e.IdOutcome == id);
         }
     }
 }

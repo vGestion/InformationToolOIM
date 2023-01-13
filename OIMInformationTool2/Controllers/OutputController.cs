@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
 
+
 namespace OIMInformationTool2.Controllers
 {
     public class OutputController : Controller
@@ -47,7 +48,7 @@ namespace OIMInformationTool2.Controllers
         // GET: Output/Create
         public IActionResult Create()
         {
-            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "IdOutcome");
+            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "Descripcion");
             return View();
         }
 
@@ -65,7 +66,7 @@ namespace OIMInformationTool2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "IdOutcome", output.OutcomeId);
+            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "Descripcion", output.OutcomeId);
             return View(output);
         }
 
@@ -82,7 +83,7 @@ namespace OIMInformationTool2.Controllers
             {
                 return NotFound();
             }
-            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "IdOutcome", output.OutcomeId);
+            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "Descripcion", output.OutcomeId);
             return View(output);
         }
 
@@ -119,7 +120,7 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "IdOutcome", output.OutcomeId);
+            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "Descripcion", output.OutcomeId);
             return View(output);
         }
 

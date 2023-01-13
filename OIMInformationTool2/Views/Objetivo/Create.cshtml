@@ -1,21 +1,21 @@
-﻿@model OIMInformationTool2.Models.AreaOim
+﻿@model OIMInformationTool2.Models.Objetivo
 
 @{
-    ViewData["Title"] = "Agregar";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Agregar</h1>
+<h1>Create</h1>
 
-<h4>Area Programatica</h4>
+<h4>Objetivo</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IdAreaOim" class="control-label">Id de área programática</label>
-                <input asp-for="IdAreaOim" class="form-control" />
-                <span asp-validation-for="IdAreaOim" class="text-danger"></span>
+                <label asp-for="IdObjetivo" class="control-label"></label>
+                <input asp-for="IdObjetivo" class="form-control" />
+                <span asp-validation-for="IdObjetivo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Descripcion" class="control-label"></label>
@@ -23,13 +23,12 @@
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Agregar" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Regresar a la lista</a>
+    <a asp-action="Index">Back to List</a>
 </div>
-

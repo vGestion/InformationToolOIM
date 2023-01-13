@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OIMInformationTool2.Models;
+using System;
 using System.Collections.Generic;
 
 namespace OIMInformationTool2.Models;
@@ -12,6 +13,8 @@ public partial class Usuario
     public string? Correo { get; set; }
 
     public int? RolId { get; set; }
+
+    public bool? Activo { get; set; }
 
     public string? Passwrd { get; set; }
 

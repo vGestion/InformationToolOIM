@@ -1,22 +1,10 @@
 ﻿@model IEnumerable<OIMInformationTool2.Models.Outcome>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista";
 }
 
-@if (TempData["alertMessage"] != null)
-{
-        <br/>
-        <div class="alert alert-secondary alert-dismissible fade show" role="alert" >
-            <strong>@TempData["alertMessage"]</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    TempData["alertMessage"] = null;
-}
-
-<h1>Lista</h1>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Agregar</a>
@@ -27,6 +15,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AreaOim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Objetivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sector)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -35,6 +32,15 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AreaOim.IdAreaOim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Objetivo.IdObjetivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sector.IdSector)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdOutcome">Editar</a> |
