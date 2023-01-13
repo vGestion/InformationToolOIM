@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Data.Odbc;
 using System.Data.OleDb;
 
 namespace OIMInformationTool2.Utils
@@ -12,17 +13,18 @@ namespace OIMInformationTool2.Utils
         {
             // Setting parameters for the excel OleDbConnection
 
-            var connection_String_xls = "Provider=Microsoft.ACE.OLEDB.12.0;" +
-                                        "Extended Properties='Excel 12.0 Xml;HDR=Yes;IMEX=0;';" +
-                                        "Data Source=" + path_file_xls;
+            var connection_String_xls = "Driver={Microsoft Excel Driver (*.xls, *.xlsx, *.xlsm, *.xlsb)};Dbq="+path_file_xls+"; Extensions=xls/xlsx;Persist Security Info=False";
             // Creating the OleDbConnection connection
-            var connection = new OleDbConnection(connection_String_xls);
+            var connection = new OdbcConnection();
+            connection.ConnectionString = connection_String_xls;
             // Opening the connection
             connection.Open();
-            OleDbCommand command = connection.CreateCommand();
+            OdbcCommand command = new OdbcCommand();
+            command.Connection = connection;
+            command.CommandType = System.Data.CommandType.Text;
             // Generating the query
             command.CommandText = "Select * from [TULCAN_NOMINAL$]";
-            OleDbDataAdapter adapter = new OleDbDataAdapter();
+            OdbcDataAdapter adapter = new OdbcDataAdapter();
             adapter.SelectCommand = command;
             // Filling the dataset form Excel using OleDbAdapter
             DataSet data = new DataSet();
