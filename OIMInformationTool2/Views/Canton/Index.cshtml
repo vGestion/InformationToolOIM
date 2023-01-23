@@ -21,7 +21,14 @@
 <p>
     <a asp-action="Create">Agregar</a>
 </p>
-<table class="table table-striped">
+
+
+<div class="mb-5">
+    <input type="text" id="searchInput" onKeyPress="search()" />
+</div>
+
+
+<table class="table table-striped" id="searchResults">
     <thead>
         <tr>
             <th>
@@ -62,3 +69,26 @@
 }
     </tbody>
 </table>
+
+<script type="text/javascript">
+    function search() {
+
+        System.Diagnostics.Debug.WriteLine('Entré a la funcion')
+
+        var searchTerm = $('#searchInput').val();
+
+        System.Diagnostics.Debug.WriteLine(searchTerm)
+
+        $.ajax({
+            url: '/canton/search',
+            type: 'GET',
+            data: { searchTerm: searchTerm },
+            success: function (result) {
+                $('#searchResults').empty();
+                $.each(result, function (index, value) {
+                    $('#searchResults').append('<tr><td>' + value.Descripcion + '</td><td>' + value.IdCanton + '</td></tr>');
+                });
+            }
+        });
+    }
+</script>
