@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<OIMInformationTool2.Models.Canton>
 
 @{
-    ViewData["Title"] = "Listar";
+    ViewData["Title"] = "Cantón";
 }
 
 @if (TempData["alertMessage"] != null)
@@ -24,13 +24,16 @@
 
 
 <div class="mb-5">
-    <input type="text" id="searchInput" onKeyPress="search()" />
+    <input type="text" id="searchInput" onKeyDown="search()" />
 </div>
 
 
 <table class="table table-striped" id="searchResults">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCanton)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
@@ -49,6 +52,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCanton)@Html.DisplayFor(modelItem => item.ProvinciaId)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
@@ -70,25 +76,3 @@
     </tbody>
 </table>
 
-<script type="text/javascript">
-    function search() {
-
-        System.Diagnostics.Debug.WriteLine('Entré a la funcion')
-
-        var searchTerm = $('#searchInput').val();
-
-        System.Diagnostics.Debug.WriteLine(searchTerm)
-
-        $.ajax({
-            url: '/canton/search',
-            type: 'GET',
-            data: { searchTerm: searchTerm },
-            success: function (result) {
-                $('#searchResults').empty();
-                $.each(result, function (index, value) {
-                    $('#searchResults').append('<tr><td>' + value.Descripcion + '</td><td>' + value.IdCanton + '</td></tr>');
-                });
-            }
-        });
-    }
-</script>

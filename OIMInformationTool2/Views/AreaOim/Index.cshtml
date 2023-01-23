@@ -1,17 +1,20 @@
 ﻿@model IEnumerable<InformationToolOIM2.Models.AreaOim>
 
 @{
-    ViewData["Title"] = "Lista";
+    ViewData["Title"] = "Área programática OIM";
 }
 
-<h1>Index</h1>
+<h1>Área Programática</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Agregar</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdAreaOim)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
@@ -21,6 +24,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdAreaOim)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>

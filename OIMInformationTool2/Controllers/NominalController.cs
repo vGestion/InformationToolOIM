@@ -214,6 +214,10 @@ namespace OIMInformationTool2.Controllers
           return _context.Nominals.Any(e => e.IdNominal == id);
         }
 
+        // ************************************************************************************
+        // ******************************CREATED FUNCTIONS************************************* 
+        // ************************************************************************************
+
         public ActionResult InsertFromExcel()
         {
             string Path = this.HttpContext.Session.GetString("archivo");

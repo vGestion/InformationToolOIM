@@ -1,17 +1,20 @@
 ﻿@model IEnumerable<OIMInformationTool2.Models.Fondo>
 
 @{
-    ViewData["Title"] = "Lista";
+    ViewData["Title"] = "Fondo";
 }
 
-<h1>Index</h1>
+<h1>Fondo</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Agregar</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdFondo)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
@@ -28,6 +31,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdFondo)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>

@@ -1,17 +1,20 @@
 ﻿@model IEnumerable<OIMInformationTool2.Models.Implementador>
 
 @{
-    ViewData["Title"] = "Lista";
+    ViewData["Title"] = "Implementador";
 }
 
-<h1>Index</h1>
+<h1>Implementador</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Agregar</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdImplementador)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
@@ -21,6 +24,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdImplementador)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>

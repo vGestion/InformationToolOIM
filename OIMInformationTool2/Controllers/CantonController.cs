@@ -162,12 +162,11 @@ namespace OIMInformationTool2.Controllers
         {
           return _context.Cantons.Any(e => e.IdCanton == id);
         }
-        //// 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="searchTerm"></param>
-        /// <returns></returns>
+
+        // **************************************************************************************
+        // ****************************** CREATED FUNCTIONS ************************************* 
+        // **************************************************************************************
+
         [HttpGet]
         public JsonResult Search(string searchTerm)
         {

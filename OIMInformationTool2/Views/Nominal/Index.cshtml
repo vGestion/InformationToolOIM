@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<OIMInformationTool2.Models.Nominal>
 
 @{
-    ViewData["Title"] = "Lista";
+    ViewData["Title"] = "Nominal";
 }
 
 @if (TempData["alertMessage"] != null)
@@ -13,7 +13,7 @@
     TempData["alertMessage"] = null;
 }
 
-<h1>Lista</h1>
+<h1>Nominal</h1>
 
 <p>
     <a asp-action="Create">Agregar</a>
@@ -22,6 +22,9 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdNominal)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.FechaAsistencia)
                 </th>
@@ -68,6 +71,9 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdNominal)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FechaAsistencia)
                     </td>
