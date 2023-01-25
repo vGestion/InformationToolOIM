@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="areasP.xlsx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\Dashboard\Index.cshtml" />
     <None Include="Views\Fondo\Create.cshtml" />
     <None Include="Views\Fondo\Delete.cshtml" />

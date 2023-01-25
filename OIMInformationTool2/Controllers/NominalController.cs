@@ -302,5 +302,33 @@ namespace OIMInformationTool2.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+        public IActionResult saveToExcel()
+        {
+            ExcelManager manager = new ExcelManager();
+            DownloadManager download = new DownloadManager();
+
+            var listado = _context.Nominals
+                .Include(n => n.CriterioMovi)
+                .Include(n => n.Genero)
+                .Include(n => n.Indicador)
+                .Include(n => n.Nacionalidad)
+                .Include(n => n.Parentezco)
+                .Include(n => n.Periodo)
+                .Include(n => n.Sexo)
+                .Include(n => n.Usuario).ToList();
+
+            String fileName = "Files/nominal.xlsx";
+
+            manager.saveExcelFile(listado, fileName);
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            var stream = new FileStream(path, FileMode.Open);
+
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+
+
+        }
     }
 }

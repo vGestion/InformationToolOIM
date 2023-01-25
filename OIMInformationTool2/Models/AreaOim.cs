@@ -1,6 +1,4 @@
 ﻿using OIMInformationTool2.Models;
-using System;
-using System.Collections.Generic;
 
 namespace InformationToolOIM2.Models;
 
