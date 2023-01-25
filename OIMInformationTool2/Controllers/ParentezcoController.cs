@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
-
+using OIMInformationTool2.Utils;
 
 namespace OIMInformationTool2.Controllers
 {
@@ -159,6 +159,31 @@ namespace OIMInformationTool2.Controllers
         private bool ParentezcoExists(int id)
         {
           return _context.Parentezcos.Any(e => e.IdParentezco == id);
+        }
+
+
+        // ************************************************************************************
+        // ******************************CREATED FUNCTIONS************************************* 
+        // ************************************************************************************ 
+
+
+        public IActionResult saveToExcel()
+        {
+            ExcelManager manager = new ExcelManager();
+            DownloadManager download = new DownloadManager();
+
+
+            var listado = _context.Parentezcos.ToList();
+
+            String fileName = "Files/Parentescos.xlsx";
+
+            manager.saveExcelFile(listado, fileName);
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            var stream = new FileStream(path, FileMode.Open);
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+
+
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
-
+using OIMInformationTool2.Utils;
 
 namespace OIMInformationTool2.Controllers
 {
@@ -159,6 +159,29 @@ namespace OIMInformationTool2.Controllers
         private bool NacionalidadExists(int id)
         {
           return _context.Nacionalidads.Any(e => e.IdNacionalidad == id);
+        }
+
+        // ************************************************************************************
+        // ******************************CREATED FUNCTIONS************************************* 
+        // ************************************************************************************ 
+
+        public IActionResult saveToExcel()
+        {
+            ExcelManager manager = new ExcelManager();
+            DownloadManager download = new DownloadManager();
+
+
+            var listado = _context.Nacionalidads.ToList();
+
+            String fileName = "Files/Nacionalidades.xlsx";
+
+            manager.saveExcelFile(listado, fileName);
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            var stream = new FileStream(path, FileMode.Open);
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+
+
         }
     }
 }

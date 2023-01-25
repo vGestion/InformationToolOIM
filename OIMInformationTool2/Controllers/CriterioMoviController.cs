@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
-
+using OIMInformationTool2.Utils;
 
 namespace OIMInformationTool2.Controllers
 {
@@ -160,5 +160,30 @@ namespace OIMInformationTool2.Controllers
         {
           return _context.CriterioMovis.Any(e => e.IdCriterioMovi == id);
         }
+
+
+        // ************************************************************************************
+        // ******************************CREATED FUNCTIONS************************************* 
+        // ************************************************************************************ 
+
+        public IActionResult saveToExcel()
+        {
+            ExcelManager manager = new ExcelManager();
+            DownloadManager download = new DownloadManager();
+
+
+            var listado = _context.CriterioMovis.ToList();
+
+            String fileName = "Files/CriterioDeMovilidad.xlsx";
+
+            manager.saveExcelFile(listado, fileName);
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            var stream = new FileStream(path, FileMode.Open);
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+
+
+        }
+
     }
 }
