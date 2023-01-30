@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
@@ -164,7 +160,7 @@ namespace OIMInformationTool2.Controllers
             return _context.Usuarios.Any(e => e.IdUsuario == id);
         }
 
-        //****************************CREATED METHODS*******************************//
+        //****************************CREATED FUNCTIONS*******************************//
 
         [HttpPost]
         [ValidateAntiForgeryToken]
