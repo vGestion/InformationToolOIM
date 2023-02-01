@@ -1,95 +1,89 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
 using OIMInformationTool2.Utils;
 
 namespace OIMInformationTool2.Controllers
 {
-    public class FondoController : Controller
+    public class SexoController : Controller
     {
         private readonly OimContext _context;
 
-        public FondoController(OimContext context)
+        public SexoController(OimContext context)
         {
             _context = context;
         }
 
-        // GET: Fondo
+        // GET: Sexo
         public async Task<IActionResult> Index()
         {
-            var oim2Context = _context.Fondos.Include(f => f.Donante);
-            return View(await oim2Context.ToListAsync());
+            return View(await _context.Sexos.ToListAsync());
         }
 
-        // GET: Fondo/Details/5
-        public async Task<IActionResult> Details(string id)
+        // GET: Sexo/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Fondos == null)
+            if (id == null || _context.Sexos == null)
             {
                 return NotFound();
             }
 
-            var fondo = await _context.Fondos
-                .Include(f => f.Donante)
-                .FirstOrDefaultAsync(m => m.IdFondo == id);
-            if (fondo == null)
+            var sexo = await _context.Sexos
+                .FirstOrDefaultAsync(m => m.IdSexo == id);
+            if (sexo == null)
             {
                 return NotFound();
             }
 
-            return View(fondo);
+            return View(sexo);
         }
 
-        // GET: Fondo/Create
+        // GET: Sexo/Create
         public IActionResult Create()
         {
-            ViewData["DonanteId"] = new SelectList(_context.Donantes, "IdDonante", "IdDonante");
             return View();
         }
 
-        // POST: Fondo/Create
+        // POST: Sexo/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdFondo,Descripcion,FechaInicio,DonanteId,FechaFin")] Fondo fondo)
+        public async Task<IActionResult> Create([Bind("IdSexo,Descripcion")] Sexo sexo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(fondo);
+                _context.Add(sexo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DonanteId"] = new SelectList(_context.Donantes, "IdDonante", "IdDonante", fondo.DonanteId);
-            return View(fondo);
+            return View(sexo);
         }
 
-        // GET: Fondo/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        // GET: Sexo/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Fondos == null)
+            if (id == null || _context.Sexos == null)
             {
                 return NotFound();
             }
 
-            var fondo = await _context.Fondos.FindAsync(id);
-            if (fondo == null)
+            var sexo = await _context.Sexos.FindAsync(id);
+            if (sexo == null)
             {
                 return NotFound();
             }
-            ViewData["DonanteId"] = new SelectList(_context.Donantes, "IdDonante", "IdDonante", fondo.DonanteId);
-            return View(fondo);
+            return View(sexo);
         }
 
-        // POST: Fondo/Edit/5
+        // POST: Sexo/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("IdFondo,Descripcion,FechaInicio,DonanteId,FechaFin")] Fondo fondo)
+        public async Task<IActionResult> Edit(int id, [Bind("IdSexo,Descripcion")] Sexo sexo)
         {
-            if (id != fondo.IdFondo)
+            if (id != sexo.IdSexo)
             {
                 return NotFound();
             }
@@ -98,12 +92,12 @@ namespace OIMInformationTool2.Controllers
             {
                 try
                 {
-                    _context.Update(fondo);
+                    _context.Update(sexo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FondoExists(fondo.IdFondo))
+                    if (!SexoExists(sexo.IdSexo))
                     {
                         return NotFound();
                     }
@@ -114,51 +108,49 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DonanteId"] = new SelectList(_context.Donantes, "IdDonante", "IdDonante", fondo.DonanteId);
-            return View(fondo);
+            return View(sexo);
         }
 
-        // GET: Fondo/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        // GET: Sexo/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Fondos == null)
+            if (id == null || _context.Sexos == null)
             {
                 return NotFound();
             }
 
-            var fondo = await _context.Fondos
-                .Include(f => f.Donante)
-                .FirstOrDefaultAsync(m => m.IdFondo == id);
-            if (fondo == null)
+            var sexo = await _context.Sexos
+                .FirstOrDefaultAsync(m => m.IdSexo == id);
+            if (sexo == null)
             {
                 return NotFound();
             }
 
-            return View(fondo);
+            return View(sexo);
         }
 
-        // POST: Fondo/Delete/5
+        // POST: Sexo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Fondos == null)
+            if (_context.Sexos == null)
             {
-                return Problem("Entity set 'Oim2Context.Fondos'  is null.");
+                return Problem("Entity set 'OimContext.Sexos'  is null.");
             }
-            var fondo = await _context.Fondos.FindAsync(id);
-            if (fondo != null)
+            var sexo = await _context.Sexos.FindAsync(id);
+            if (sexo != null)
             {
-                _context.Fondos.Remove(fondo);
+                _context.Sexos.Remove(sexo);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FondoExists(string id)
+        private bool SexoExists(int id)
         {
-            return _context.Fondos.Any(e => e.IdFondo == id);
+            return _context.Sexos.Any(e => e.IdSexo == id);
         }
 
         // ************************************************************************************
@@ -171,17 +163,15 @@ namespace OIMInformationTool2.Controllers
             DownloadManager download = new DownloadManager();
 
 
-            var listado = _context.Fondos.ToList();
+            var listado = _context.AreaOims.ToList();
 
-            String fileName = "Files/Fondos.xlsx";
+            String fileName = "Files/sexos.xlsx";
 
             manager.saveExcelFile(listado, fileName);
 
             var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
             var stream = new FileStream(path, FileMode.Open);
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-
-
         }
     }
 }

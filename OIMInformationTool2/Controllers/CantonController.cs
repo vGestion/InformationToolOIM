@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
 using OIMInformationTool2.Models;
 using OIMInformationTool2.Utils;
 
@@ -23,16 +25,15 @@ namespace OIMInformationTool2.Controllers
         }
 
         // GET: Canton/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [Route("Canton/Details/{idP}/{idC}")]
+        public async Task<IActionResult> Details(int? idP, int? idC)
         {
-            if (id == null || _context.Cantons == null)
+            if (idC == null || _context.Cantons == null)
             {
                 return NotFound();
             }
 
-            var canton = await _context.Cantons
-                .Include(c => c.Provincia)
-                .FirstOrDefaultAsync(m => m.IdCanton == id);
+            var canton = await _context.Cantons.FindAsync(idC, idP);
             if (canton == null)
             {
                 return NotFound();
@@ -67,14 +68,16 @@ namespace OIMInformationTool2.Controllers
         }
 
         // GET: Canton/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+
+        [Route("Canton/Edit/{idP}/{idC}")]
+        public async Task<IActionResult> Edit(int? idC, int? idP)
         {
-            if (id == null || _context.Cantons == null)
+            if (idC == null || _context.Cantons == null)
             {
                 return NotFound();
             }
 
-            var canton = await _context.Cantons.FindAsync(id);
+            var canton = await _context.Cantons.FindAsync(idC,idP);
             if (canton == null)
             {
                 return NotFound();
@@ -121,16 +124,16 @@ namespace OIMInformationTool2.Controllers
         }
 
         // GET: Canton/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [Route("Canton/Delete/{idP}/{idC}")]
+        public async Task<IActionResult> Delete(int? idC, int? idP)
         {
-            if (id == null || _context.Cantons == null)
+            if (idC == null || _context.Cantons == null)
             {
                 return NotFound();
             }
 
-            var canton = await _context.Cantons
-                .Include(c => c.Provincia)
-                .FirstOrDefaultAsync(m => m.IdCanton == id);
+            var canton = await _context.Cantons.FindAsync(idC, idP);
+
             if (canton == null)
             {
                 return NotFound();
@@ -142,26 +145,26 @@ namespace OIMInformationTool2.Controllers
         // POST: Canton/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int idC, int idP)
         {
             if (_context.Cantons == null)
             {
                 return Problem("Entity set 'OimContext.Cantons'  is null.");
             }
-            var canton = await _context.Cantons.FindAsync(id);
+            var canton = await _context.Cantons.FindAsync(idC, idP);
             if (canton != null)
             {
                 _context.Cantons.Remove(canton);
                 TempData["alertMessage"] = "Eliminado con éxito";
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CantonExists(int id)
         {
-          return _context.Cantons.Any(e => e.IdCanton == id);
+            return _context.Cantons.Any(e => e.IdCanton == id);
         }
 
         // **************************************************************************************

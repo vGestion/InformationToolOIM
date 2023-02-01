@@ -67,7 +67,7 @@ namespace OIMInformationTool2.Controllers
             ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "Descripcion");
             ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "Descripcion");
             ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "Descripcion");
-            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "Descripcion");
+            ViewData["PeriodoId"] = new SelectList(_context.Periodos.Where(r => r.Activo == true), "IdPeriodo", "Descripcion");
             ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "Descripcion");
             ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre");
             return View();
@@ -225,68 +225,142 @@ namespace OIMInformationTool2.Controllers
             ExcelManager reader = new ExcelManager();
             DataSet data = reader.readExcelSheet(Path);
             Boolean valido = true;
+            Boolean validoPeriodo = true;
             Random rnd = new Random();
             // Inserting information into database
             int i = 0;
-            foreach (DataRow dr in data.Tables[0].Rows)
+            String error = "";
+
+            if (_context.Periodos.Where(r => r.Activo == true).ToList().Count() == 0)
             {
-                i = i + 1;
-                if ((dr["ID_INDICADOR"].ToString() == "") && (dr["FECHA_ASISTENCIA"].ToString() == "") && (dr["CORTE"].ToString() == "") && (dr["EDAD"].ToString() == "") && (dr["DISCAPACIDAD"].ToString() == "") && (dr["MONTO_ECONOMICO"].ToString() == "")
-                    && (dr["ID_GENERO"].ToString() == "") && (dr["SEXO"].ToString() == "") && (dr["NACIONALIDAD"].ToString() == "") && (dr["ID_CANTON"].ToString() == "") && (dr["PARENTEZCO"].ToString() == "") && (dr["CRITERIO_MOVILIDAD"].ToString() == ""))
-                {
-                    
-                    break;
-                }
-
-                if ((dr["ID_INDICADOR"].ToString() == "") | (dr["FECHA_ASISTENCIA"].ToString() == "") | (dr["CORTE"].ToString() == "") | (dr["EDAD"].ToString() == "") | (dr["DISCAPACIDAD"].ToString() == "") | (dr["MONTO_ECONOMICO"].ToString() == "")
-                    | (dr["ID_GENERO"].ToString() == "") | (dr["SEXO"].ToString() == "") | (dr["NACIONALIDAD"].ToString() == "") | (dr["ID_CANTON"].ToString() == "") | (dr["PARENTEZCO"].ToString() == "") | (dr["CRITERIO_MOVILIDAD"].ToString() == "")) 
-                {
-                    valido = false;
-                    TempData["alertMessage"] = "Error en la fila: "+i;
-                    break;
-                }
-            
-            }
-
-
-            if(valido == true)
-            {
+               
+                TempData["alertMessage"] = "No existe un periodo activo";
+            } else {
                 foreach (DataRow dr in data.Tables[0].Rows)
                 {
-                    if (dr["ID_INDICADOR"].ToString() == "")
+                    i = i + 1;
+
+                    if ((dr["ID_INDICADOR"].ToString() == ""))
+                    {
+                        error = error + "La columna INDICADOR está vacía en la fila " + i + " *** ";
+                        valido = false;
+                    }
+
+                    if ((dr["FECHA_ASISTENCIA"].ToString() == ""))
+                    {
+                        error = error + "La columna FECHA_ASISTENCIA está vacía en la fila" + i + " *** ";
+                        valido = false;
+                    }
+
+                    if ((dr["CORTE"].ToString() == ""))
+                    {
+                        error = error + "La columna CORTE está vacía en la fila" + i + " *** ";
+                        valido = false;
+                    }
+
+                    if ((dr["EDAD"].ToString() == ""))
+                    {
+                        error = error + "La columna EDAD está vacía en la fila" + i + " *** ";
+                        valido = false;
+                    }
+
+                    if ((dr["DISCAPACIDAD"].ToString() == ""))
+                    {
+                        error = error + "La columna DISCAPACIDAD está vacía en la fila" + i + " *** ";
+                        valido = false;
+                    }
+                    if ((dr["MONTO_ECONOMICO"].ToString() == ""))
+                    {
+                        error = error + "La columna MONTO está vacía en la fila" + i + " *** ";
+                        valido = false;
+                    }
+                    if ((dr["ID_GENERO"].ToString() == ""))
+                    {
+                        error = error + "La columna GENERO está vacía en la fila" + i + " *** ";
+                        valido = false;
+                    }
+                    if ((dr["SEXO"].ToString() == ""))
+                    {
+                        error = error + "La columna SEXO está vacía en la fila" + i + " *** ";
+                        valido = false;
+                    }
+                    if ((dr["NACIONALIDAD"].ToString() == ""))
+                    {
+                        error = error + "La columna NACIONALIDAD está vacía en la fila" + i + " *** ";
+                        valido = false;
+                    }
+                    if ((dr["ID_CANTON"].ToString() == ""))
+                    {
+                        error = error + "La columna CANTON está vacía en la fila" + i + " *** ";
+                        valido = false;
+                    }
+                    if ((dr["PARENTEZCO"].ToString() == ""))
+                    {
+                        error = error + "La columna PARENTEZCO está vacía en la fila" + i + " *** ";
+                        valido = false;
+                    }
+                    if (dr["CRITERIO_MOVILIDAD"].ToString() == "")
+                    {
+                        error = error + "La columna CRITERIO_MOVILIDAD está vacía en la fila" + i + " *** ";
+                        valido = false;
+                    }
+                    if ((dr["ID_INDICADOR"].ToString() == "") && (dr["FECHA_ASISTENCIA"].ToString() == "") && (dr["CORTE"].ToString() == "") && (dr["EDAD"].ToString() == "") && (dr["DISCAPACIDAD"].ToString() == "") && (dr["MONTO_ECONOMICO"].ToString() == "")
+                    && (dr["ID_GENERO"].ToString() == "") && (dr["SEXO"].ToString() == "") && (dr["NACIONALIDAD"].ToString() == "") && (dr["ID_CANTON"].ToString() == "") && (dr["PARENTEZCO"].ToString() == "") && (dr["CRITERIO_MOVILIDAD"].ToString() == ""))
                     {
 
                         break;
                     }
-
-                    Finders find = new Finders();
-                    Nominal nominal = new Nominal();
-
-                    nominal.FechaAsistencia = DateTime.Parse(dr["FECHA_ASISTENCIA"].ToString());
-                    nominal.FechaCorte = DateTime.Parse(dr["CORTE"].ToString());
-                    nominal.Edad = (int)Convert.ToInt64(dr["EDAD"].ToString());
-                    nominal.Discapacidad = find.DiscapacidadTranformer(dr["DISCAPACIDAD"].ToString());
-                    nominal.Monto = Convert.ToDecimal(dr["MONTO_ECONOMICO"].ToString());
-                    nominal.FechaRegistro = DateTime.Now;
-                    nominal.IndicadorId = dr["ID_INDICADOR"].ToString();
-                    nominal.GeneroId = (int)Convert.ToInt64(dr["ID_GENERO"].ToString());
-                    nominal.SexoId = find.IdFinderGenero(dr["SEXO"].ToString(), _context.Generos.ToList());
-                    nominal.ParentezcoId = find.IdFinderParentezco(dr["PARENTEZCO"].ToString(), _context.Parentezcos.ToList());
-                    nominal.NacionalidadId = find.IdFinderNacionalidad(dr["NACIONALIDAD"].ToString(), _context.Nacionalidads.ToList());
-                    nominal.CantonId = (int)Convert.ToInt64(dr["ID_CANTON"].ToString().Substring(0,2));
-                    nominal.ProvinciaId = (int)Convert.ToInt64(dr["ID_CANTON"].ToString().Substring(2,2));
-                    nominal.CriterioMoviId = find.IdFinderCriterioMovilidad(dr["CRITERIO_MOVILIDAD"].ToString(), _context.CriterioMovis.ToList());
-                    nominal.PeriodoId = _context.Periodos.FromSql($"Select * from dbo.Periodo where ID_periodo = 1").ToList()[0].IdPeriodo;
-                    nominal.UsuarioId = (int)Convert.ToInt64(HttpContext.Session.GetString("usuarioId")); ;
-                    nominal.IdNominal = rnd.Next(5000, 2040000);
-                    
-                    _context.Add(nominal);
-                    _context.SaveChanges();
                 }
 
-                TempData["alertMessage"] = "Los datos se han ingresado correctamente";
 
+
+                if (valido == false)
+                {
+                    TempData["alertMessage"] = error;
+                }
+                else
+                {
+                    foreach (DataRow dr in data.Tables[0].Rows)
+                    {
+                        if (dr["ID_INDICADOR"].ToString() == "")
+                        {
+
+                            break;
+                        }
+
+                        Finders find = new Finders();
+                        Nominal nominal = new Nominal();
+
+                        nominal.FechaAsistencia = DateTime.Parse(dr["FECHA_ASISTENCIA"].ToString());
+                        nominal.FechaCorte = DateTime.Parse(dr["CORTE"].ToString());
+                        nominal.Edad = (int)Convert.ToInt64(dr["EDAD"].ToString());
+                        nominal.Discapacidad = find.DiscapacidadTranformer(dr["DISCAPACIDAD"].ToString());
+                        nominal.Monto = Convert.ToDecimal(dr["MONTO_ECONOMICO"].ToString());
+                        nominal.FechaRegistro = DateTime.Now;
+                        nominal.IndicadorId = dr["ID_INDICADOR"].ToString();
+                        nominal.GeneroId = (int)Convert.ToInt64(dr["ID_GENERO"].ToString());
+                        nominal.SexoId = find.IdFinderGenero(dr["SEXO"].ToString(), _context.Generos.ToList());
+                        nominal.ParentezcoId = find.IdFinderParentezco(dr["PARENTEZCO"].ToString(), _context.Parentezcos.ToList());
+                        nominal.NacionalidadId = find.IdFinderNacionalidad(dr["NACIONALIDAD"].ToString(), _context.Nacionalidads.ToList());
+                        nominal.CantonId = (int)Convert.ToInt64(dr["ID_CANTON"].ToString().Substring(0, 2));
+                        nominal.ProvinciaId = (int)Convert.ToInt64(dr["ID_CANTON"].ToString().Substring(2, 2));
+                        nominal.CriterioMoviId = find.IdFinderCriterioMovilidad(dr["CRITERIO_MOVILIDAD"].ToString(), _context.CriterioMovis.ToList());
+                        nominal.PeriodoId = _context.Periodos.FromSql($"Select * from dbo.Periodo where Activo = true").ToList()[0].IdPeriodo;
+                        nominal.UsuarioId = (int)Convert.ToInt64(HttpContext.Session.GetString("usuarioId")); ;
+                        nominal.IdNominal = _context.Nominals.ToList().Count() + 1;
+
+                        _context.Add(nominal);
+                        _context.SaveChanges();
+                    }
+
+                    TempData["alertMessage"] = "Los datos se han ingresado correctamente";
+
+                }
             }
+
+
+
+
 
             if (System.IO.File.Exists(Path))
             {

@@ -166,33 +166,26 @@ namespace OIMInformationTool2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UserLogin()
         {
-            List<Usuario> users = await _context.Usuarios.ToListAsync();
-
             string correo = Request.Form["Nombre"]!;
             string password = Request.Form["Passwrd"]!;
 
-            System.Diagnostics.Debug.WriteLine(correo);
+            List<Usuario> users = await _context.Usuarios.Where(r => r.Correo == correo).Where(r => r.Passwrd == password).ToListAsync();
 
-            foreach (Usuario u in users)
+            if (users.Count != 0)
             {
-                System.Diagnostics.Debug.WriteLine(password + " " + u.Passwrd);
-
-                if ((correo == u.Correo))
-                {
-                    if (password == u.Passwrd)
-                    {
-                        System.Diagnostics.Debug.WriteLine("ES IGUAL!!!!");
-                    }
-                    System.Diagnostics.Debug.WriteLine(u.RolId.ToString());
-                    this.HttpContext.Session.SetString("usuario", u.Nombre!);
-                    this.HttpContext.Session.SetString("usuarioId", u.IdUsuario.ToString()!);
-                    this.HttpContext.Session.SetString("tipoUsuario", u.RolId.ToString()!);
-                    return RedirectToAction("Index", "Home");
-                }
+                this.HttpContext.Session.SetString("usuario", users[0].Nombre);
+                this.HttpContext.Session.SetString("usuarioId", users[0].IdUsuario.ToString());
+                this.HttpContext.Session.SetString("tipoUsuario", users[0].RolId.ToString());
+                return RedirectToAction("Index", "Home");
+            }else{
+                return RedirectToAction("Index", "Login");
             }
-            return RedirectToAction("Index", "Login");
+
+
+
         }
     }
 }
+
     
 

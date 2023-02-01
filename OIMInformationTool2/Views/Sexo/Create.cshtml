@@ -1,25 +1,29 @@
-﻿@model OIMInformationTool2.Models.Parentezco
+﻿@model OIMInformationTool2.Models.Sexo
 
 @{
-    ViewData["Title"] = "Editar";
+    ViewData["Title"] = "Agregar";
 }
 
-<h1>Editar</h1>
+<h1>Agregar</h1>
 
-<h4>Parentesco</h4>
+<h4>Sexo</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdParentezco" />
+            <div class="form-group">
+                <label asp-for="IdSexo" class="control-label"></label>
+                <input asp-for="IdSexo" class="form-control" />
+                <span asp-validation-for="IdSexo" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Descripcion" class="control-label"></label>
                 <input asp-for="Descripcion" class="form-control" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-oim" />
+                <input type="submit" value="Agregar" class="btn btn-primary" />
             </div>
         </form>
     </div>
