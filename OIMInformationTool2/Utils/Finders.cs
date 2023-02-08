@@ -50,12 +50,35 @@ namespace InformationToolOIM2.Utils
             return id;
         }
 
-        public int IdFinderSexo(String nombre, List<Sexo> genero)
+        public int IdFinderIdentidadSexual(String nombre, List<IdentSexual> lista)
         {
             nombre = helper.ReplaceAccents(nombre);
 
             int id = 999999;
-            foreach (Sexo Gen in genero)
+            foreach (IdentSexual Gen in lista)
+            {
+                //If the giving gender is in the table, return its id and break the loop
+                if (Gen.Descripcion.Contains(nombre))
+                {
+                    id = Gen.IdIdentSexual;
+                    break;
+                }
+                else if (Gen.Descripcion.Contains("OTRO"))
+                //If the giving gender is not in the table, return the id for 'OTRO' value
+                {
+                    id = Gen.IdIdentSexual;
+                }
+            }
+           
+            return id;
+        }
+
+        public int IdFinderSexo(String nombre, List<Sexo> lista)
+        {
+            nombre = helper.ReplaceAccents(nombre);
+
+            int id = 999999;
+            foreach (Sexo Gen in lista)
             {
                 //If the giving gender is in the table, return its id and break the loop
                 if (Gen.Descripcion.Contains(nombre))

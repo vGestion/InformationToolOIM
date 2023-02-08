@@ -9,13 +9,10 @@ public partial class Indicador
 {
     public string IdIndicador { get; set; } = null!;
 
-    [DisplayName("Indicador")]
     public string? Descripcion { get; set; }
 
-    [DisplayName("Fondo")]
     public string? FondoId { get; set; }
 
-    [DisplayName("Meta")]
     public string? Meta { get; set; }
 
     public string? OutputId { get; set; }
@@ -28,6 +25,8 @@ public partial class Indicador
 
     public int? ImplementadorId { get; set; }
 
+    public int? UaId { get; set; }
+
     public int? PeriodicidadId { get; set; }
 
     public virtual Fondo? Fondo { get; set; }
@@ -39,4 +38,6 @@ public partial class Indicador
     public virtual Output? Output { get; set; }
 
     public virtual Periodicidad? Periodicidad { get; set; }
+
+    public virtual UnidadAnalisi? Ua { get; set; }
 }

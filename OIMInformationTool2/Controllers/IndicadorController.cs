@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
-using OIMInformationTool2.Utils;
 
 namespace OIMInformationTool2.Controllers
 {
@@ -22,8 +17,8 @@ namespace OIMInformationTool2.Controllers
         // GET: Indicador
         public async Task<IActionResult> Index()
         {
-            var oim2Context = _context.Indicadors.Include(i => i.Fondo).Include(i => i.Implementador).Include(i => i.Output).Include(i => i.Periodicidad);
-            return View(await oim2Context.ToListAsync());
+            var oimContext = _context.Indicadors.Include(i => i.Fondo).Include(i => i.Implementador).Include(i => i.Output).Include(i => i.Periodicidad).Include(i => i.Ua);
+            return View(await oimContext.ToListAsync());
         }
 
         // GET: Indicador/Details/5
@@ -39,6 +34,7 @@ namespace OIMInformationTool2.Controllers
                 .Include(i => i.Implementador)
                 .Include(i => i.Output)
                 .Include(i => i.Periodicidad)
+                .Include(i => i.Ua)
                 .FirstOrDefaultAsync(m => m.IdIndicador == id);
             if (indicador == null)
             {
@@ -55,6 +51,7 @@ namespace OIMInformationTool2.Controllers
             ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion");
             ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion");
             ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "Descripcion");
+            ViewData["UaId"] = new SelectList(_context.UnidadAnalises, "IdUa", "Descripcion");
             return View();
         }
 
@@ -63,7 +60,7 @@ namespace OIMInformationTool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdIndicador,Descripcion,FondoId,Meta,OutputId,NumeroTotal,CampoReferencia,FormulaCalculo,ImplementadorId,PeriodicidadId")] Indicador indicador)
+        public async Task<IActionResult> Create([Bind("IdIndicador,Descripcion,FondoId,Meta,OutputId,NumeroTotal,CampoReferencia,FormulaCalculo,ImplementadorId,UaId,PeriodicidadId")] Indicador indicador)
         {
             if (ModelState.IsValid)
             {
@@ -73,8 +70,9 @@ namespace OIMInformationTool2.Controllers
             }
             ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "Descripcion", indicador.FondoId);
             ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion", indicador.ImplementadorId);
-            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "descripcion", indicador.OutputId);
+            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion", indicador.OutputId);
             ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "Descripcion", indicador.PeriodicidadId);
+            ViewData["UaId"] = new SelectList(_context.UnidadAnalises, "IdUa", "Descripcion", indicador.UaId);
             return View(indicador);
         }
 
@@ -93,8 +91,9 @@ namespace OIMInformationTool2.Controllers
             }
             ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "Descripcion", indicador.FondoId);
             ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion", indicador.ImplementadorId);
-            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "descripcion", indicador.OutputId);
+            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion", indicador.OutputId);
             ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "Descripcion", indicador.PeriodicidadId);
+            ViewData["UaId"] = new SelectList(_context.UnidadAnalises, "IdUa", "Descripcion", indicador.UaId);
             return View(indicador);
         }
 
@@ -103,7 +102,7 @@ namespace OIMInformationTool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("IdIndicador,Descripcion,FondoId,Meta,OutputId,NumeroTotal,CampoReferencia,FormulaCalculo,ImplementadorId,PeriodicidadId")] Indicador indicador)
+        public async Task<IActionResult> Edit(string id, [Bind("IdIndicador,Descripcion,FondoId,Meta,OutputId,NumeroTotal,CampoReferencia,FormulaCalculo,ImplementadorId,UaId,PeriodicidadId")] Indicador indicador)
         {
             if (id != indicador.IdIndicador)
             {
@@ -130,10 +129,11 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "IdFondo", indicador.FondoId);
-            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "IdImplementador", indicador.ImplementadorId);
-            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "IdOutput", indicador.OutputId);
-            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "IdPeriodo", indicador.PeriodicidadId);
+            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "Descripcion", indicador.FondoId);
+            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion", indicador.ImplementadorId);
+            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion", indicador.OutputId);
+            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "Descripcion", indicador.PeriodicidadId);
+            ViewData["UaId"] = new SelectList(_context.UnidadAnalises, "IdUa", "Descripcion", indicador.UaId);
             return View(indicador);
         }
 
@@ -150,6 +150,7 @@ namespace OIMInformationTool2.Controllers
                 .Include(i => i.Implementador)
                 .Include(i => i.Output)
                 .Include(i => i.Periodicidad)
+                .Include(i => i.Ua)
                 .FirstOrDefaultAsync(m => m.IdIndicador == id);
             if (indicador == null)
             {
@@ -166,45 +167,21 @@ namespace OIMInformationTool2.Controllers
         {
             if (_context.Indicadors == null)
             {
-                return Problem("Entity set 'Oim2Context.Indicadors'  is null.");
+                return Problem("Entity set 'OimContext.Indicadors'  is null.");
             }
             var indicador = await _context.Indicadors.FindAsync(id);
             if (indicador != null)
             {
                 _context.Indicadors.Remove(indicador);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool IndicadorExists(string id)
         {
-            return _context.Indicadors.Any(e => e.IdIndicador == id);
-        }
-
-
-        // ************************************************************************************
-        // ******************************CREATED FUNCTIONS************************************* 
-        // ************************************************************************************ 
-
-        public IActionResult saveToExcel()
-        {
-            ExcelManager manager = new ExcelManager();
-            DownloadManager download = new DownloadManager();
-
-
-            var listado = _context.Indicadors.Include(i => i.Fondo).Include(i => i.Implementador).Include(i => i.Output).Include(i => i.Periodicidad).ToList();
-
-            String fileName = "Files/Indicador.xlsx";
-
-            manager.saveExcelFile(listado, fileName);
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            var stream = new FileStream(path, FileMode.Open);
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-
-
+          return _context.Indicadors.Any(e => e.IdIndicador == id);
         }
     }
 }
