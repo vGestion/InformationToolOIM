@@ -192,6 +192,15 @@ namespace OIMInformationTool2.Controllers
             }
             return RedirectToAction("Index", "Login");
         }
+
+        public async Task<ActionResult> UserLogout()
+        {
+            this.HttpContext.Session.SetString("usuario","");
+            this.HttpContext.Session.SetString("usuarioId", "");
+            this.HttpContext.Session.SetString("tipoUsuario", "");
+            return RedirectToAction("Index", "Login");
+
+        }
     }
 }
     
