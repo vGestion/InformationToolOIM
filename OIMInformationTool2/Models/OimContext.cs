@@ -21,6 +21,8 @@ public partial class OimContext : DbContext
 
     public virtual DbSet<Canton> Cantons { get; set; }
 
+    public virtual DbSet<CondicionEsp> CondicionEsps { get; set; }
+
     public virtual DbSet<CriterioMovi> CriterioMovis { get; set; }
 
     public virtual DbSet<Donante> Donantes { get; set; }
@@ -28,6 +30,8 @@ public partial class OimContext : DbContext
     public virtual DbSet<Fondo> Fondos { get; set; }
 
     public virtual DbSet<Genero> Generos { get; set; }
+
+    public virtual DbSet<IdentSexual> IdentSexuals { get; set; }
 
     public virtual DbSet<Implementador> Implementadors { get; set; }
 
@@ -57,6 +61,10 @@ public partial class OimContext : DbContext
 
     public virtual DbSet<Sexo> Sexos { get; set; }
 
+    public virtual DbSet<TipoUa> TipoUas { get; set; }
+
+    public virtual DbSet<UnidadAnalisi> UnidadAnalises { get; set; }
+
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     public virtual DbSet<UsuarioCanton> UsuarioCantons { get; set; }
@@ -67,8 +75,6 @@ public partial class OimContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseCollation("Modern_Spanish_CI_AS");
-
         modelBuilder.Entity<AreaOim>(entity =>
         {
             entity.HasKey(e => e.IdAreaOim).HasName("XPKArea_OIM");
@@ -101,6 +107,20 @@ public partial class OimContext : DbContext
                 .HasForeignKey(d => d.ProvinciaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("R_9");
+        });
+
+        modelBuilder.Entity<CondicionEsp>(entity =>
+        {
+            entity.HasKey(e => e.IdCondicionEsp);
+
+            entity.ToTable("CondicionEsp");
+
+            entity.Property(e => e.IdCondicionEsp)
+                .ValueGeneratedNever()
+                .HasColumnName("ID_condicionEsp");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(200)
+                .IsFixedLength();
         });
 
         modelBuilder.Entity<CriterioMovi>(entity =>
@@ -172,6 +192,20 @@ public partial class OimContext : DbContext
                 .IsFixedLength();
         });
 
+        modelBuilder.Entity<IdentSexual>(entity =>
+        {
+            entity.HasKey(e => e.IdIdentSexual);
+
+            entity.ToTable("IdentSexual");
+
+            entity.Property(e => e.IdIdentSexual)
+                .ValueGeneratedNever()
+                .HasColumnName("ID_identSexual");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(200)
+                .IsFixedLength();
+        });
+
         modelBuilder.Entity<Implementador>(entity =>
         {
             entity.HasKey(e => e.IdImplementador).HasName("XPKImplementador");
@@ -224,6 +258,7 @@ public partial class OimContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("Output_Id");
             entity.Property(e => e.PeriodicidadId).HasColumnName("Periodicidad_id");
+            entity.Property(e => e.UaId).HasColumnName("Ua_id");
 
             entity.HasOne(d => d.Fondo).WithMany(p => p.Indicadors)
                 .HasForeignKey(d => d.FondoId)
@@ -235,11 +270,16 @@ public partial class OimContext : DbContext
 
             entity.HasOne(d => d.Output).WithMany(p => p.Indicadors)
                 .HasForeignKey(d => d.OutputId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("R_25");
 
             entity.HasOne(d => d.Periodicidad).WithMany(p => p.Indicadors)
                 .HasForeignKey(d => d.PeriodicidadId)
                 .HasConstraintName("R_40");
+
+            entity.HasOne(d => d.Ua).WithMany(p => p.Indicadors)
+                .HasForeignKey(d => d.UaId)
+                .HasConstraintName("R_63");
         });
 
         modelBuilder.Entity<Nacionalidad>(entity =>
@@ -266,6 +306,7 @@ public partial class OimContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("ID_nominal");
             entity.Property(e => e.CantonId).HasColumnName("Canton_id");
+            entity.Property(e => e.CondicionEspId).HasColumnName("CondicionEsp_id");
             entity.Property(e => e.CriterioMoviId).HasColumnName("Criterio_movi_id");
             entity.Property(e => e.FechaAsistencia)
                 .HasColumnType("datetime")
@@ -277,6 +318,7 @@ public partial class OimContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("Fecha_registro");
             entity.Property(e => e.GeneroId).HasColumnName("Genero_id");
+            entity.Property(e => e.IdentSexualId).HasColumnName("IdentSexual_id");
             entity.Property(e => e.IndicadorId)
                 .HasMaxLength(15)
                 .IsFixedLength()
@@ -289,6 +331,10 @@ public partial class OimContext : DbContext
             entity.Property(e => e.SexoId).HasColumnName("Sexo_id");
             entity.Property(e => e.UsuarioId).HasColumnName("Usuario_id");
 
+            entity.HasOne(d => d.CondicionEsp).WithMany(p => p.Nominals)
+                .HasForeignKey(d => d.CondicionEspId)
+                .HasConstraintName("R_65");
+
             entity.HasOne(d => d.CriterioMovi).WithMany(p => p.Nominals)
                 .HasForeignKey(d => d.CriterioMoviId)
                 .HasConstraintName("R_12");
@@ -297,8 +343,13 @@ public partial class OimContext : DbContext
                 .HasForeignKey(d => d.GeneroId)
                 .HasConstraintName("R_52");
 
+            entity.HasOne(d => d.IdentSexual).WithMany(p => p.Nominals)
+                .HasForeignKey(d => d.IdentSexualId)
+                .HasConstraintName("R_64");
+
             entity.HasOne(d => d.Indicador).WithMany(p => p.Nominals)
                 .HasForeignKey(d => d.IndicadorId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("R_42");
 
             entity.HasOne(d => d.Nacionalidad).WithMany(p => p.Nominals)
@@ -334,7 +385,7 @@ public partial class OimContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("ID_objetivo");
             entity.Property(e => e.Descripcion)
-                .HasMaxLength(200)
+                .HasMaxLength(1000)
                 .IsFixedLength();
         });
 
@@ -393,7 +444,6 @@ public partial class OimContext : DbContext
 
             entity.HasOne(d => d.Outcome).WithMany(p => p.Outputs)
                 .HasForeignKey(d => d.OutcomeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("R_26");
         });
 
@@ -493,6 +543,40 @@ public partial class OimContext : DbContext
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TipoUa>(entity =>
+        {
+            entity.HasKey(e => e.IdTipoUa);
+
+            entity.ToTable("Tipo_ua");
+
+            entity.Property(e => e.IdTipoUa)
+                .ValueGeneratedNever()
+                .HasColumnName("ID_tipo_ua");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(200)
+                .IsFixedLength();
+        });
+
+        modelBuilder.Entity<UnidadAnalisi>(entity =>
+        {
+            entity.HasKey(e => e.IdUa);
+
+            entity.ToTable("Unidad_analisis");
+
+            entity.Property(e => e.IdUa)
+                .ValueGeneratedNever()
+                .HasColumnName("ID_ua");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(200)
+                .IsFixedLength();
+            entity.Property(e => e.TipoUaId).HasColumnName("Tipo_ua_id");
+
+            entity.HasOne(d => d.TipoUa).WithMany(p => p.UnidadAnalisis)
+                .HasForeignKey(d => d.TipoUaId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("R_63");
         });
 
         modelBuilder.Entity<Usuario>(entity =>

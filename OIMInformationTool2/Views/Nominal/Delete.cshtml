@@ -60,6 +60,12 @@
             @Html.DisplayFor(model => model.ProvinciaId)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CondicionEsp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CondicionEsp.IdCondicionEsp)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CriterioMovi)
         </dt>
         <dd class = "col-sm-10">
@@ -70,6 +76,12 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Genero.IdGenero)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdentSexual)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdentSexual.IdIdentSexual)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Indicador)

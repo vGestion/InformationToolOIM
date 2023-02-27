@@ -267,6 +267,36 @@ namespace OIMInformationTool2.Utils
                 workbook.SaveAs(fileName);
             }
         }
+
+        public void saveExcelFile(List<Sexo> lista, String fileName)
+        {
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Sheet1");
+
+
+                worksheet.Range(1, 1, 1, 2).Merge().Value = "Sexos";
+
+                worksheet.Cell(2, 1).Value = "Recuperado el " + System.DateTime.Now.ToString();
+
+                worksheet.Cell(3, 1).Value = "ID";
+                worksheet.Cell(3, 2).Value = "Descripción";
+
+                worksheet.Range(3, 1, 3, 2).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#0033A0"));
+                worksheet.Range(3, 1, 3, 2).Style.Font.SetFontColor(XLColor.White);
+
+                int j = 4;
+
+                lista.ForEach(x =>
+                {
+                    worksheet.Cell(j, 1).Value = x.IdSexo;
+                    worksheet.Cell(j, 2).Value = x.Descripcion;
+                    j++;
+                });
+                workbook.SaveAs(fileName);
+            }
+        }
         public void saveExcelFile(List<Implementador> lista, String fileName)
         {
 

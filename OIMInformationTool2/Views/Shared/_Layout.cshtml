@@ -8,12 +8,10 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
         <link rel=”stylesheet” href=”https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css” />
         <link rel="stylesheet" href="~/css/oimstyles.css" />
-        
-      
     </head>
     <body>
     <nav class="navbar navbar-expand-xl bg-b">
-        <a class="navbar-brand">
+        <a asp-action="index" asp-controller="home" class="navbar-brand">
             <img src="https://static.youthop.com/uploads/sites/2/2020/02/iom-logo-wb.jpg"
                  class="img-fluid" alt="Sample image" style="max-height: 60px; min-height:60px">
         </a>
@@ -29,7 +27,6 @@
             </ul>
         </div>
     </nav>
-
         <div class="row">
             <div class="col-2" style="padding-right:0px">
                 <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
@@ -50,6 +47,8 @@
                                     <a href="~/Nacionalidad" class="list-group-item list-group-item-action py-2 ripple"><span>Nacionalidades</span></a>
                                     <a href="~/Genero" class="list-group-item list-group-item-action py-2 ripple"><span>Género</span></a>
                                     <a href="~/Sexo" class="list-group-item list-group-item-action py-2 ripple"><span>Sexo</span></a>
+                                    <a href="~/IdentSexual" class="list-group-item list-group-item-action py-2 ripple"><span>Identidad Sexual</span></a>
+                                    <a href="~/CondicionEsp" class="list-group-item list-group-item-action py-2 ripple"><span>Condiciones Especiales</span></a>
                                     <a href="~/Parentezco" class="list-group-item list-group-item-action py-2 ripple"><span>Parentescos</span></a>
                                     <a href="~/Periodo" class="list-group-item list-group-item-action py-2 ripple"><span>Periodos</span></a>
                                     <a href="~/Provincia" class="list-group-item list-group-item-action py-2 ripple"><span>Provincias</span></a>
@@ -89,11 +88,7 @@
             <div class="container body-content">
                 @RenderBody()
             </div>
-            
-               
-
         </div>
-       
 
         </div>
         <hr />
