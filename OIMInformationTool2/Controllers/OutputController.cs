@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
-using OIMInformationTool2.Utils;
 
 namespace OIMInformationTool2.Controllers
 {
@@ -48,7 +47,7 @@ namespace OIMInformationTool2.Controllers
         // GET: Output/Create
         public IActionResult Create()
         {
-            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "Descripcion");
+            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "IdOutcome");
             return View();
         }
 
@@ -62,11 +61,10 @@ namespace OIMInformationTool2.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(output);
-                TempData["alertMessage"] = "Creado con éxito";
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "Descripcion", output.OutcomeId);
+            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "IdOutcome", output.OutcomeId);
             return View(output);
         }
 
@@ -83,7 +81,7 @@ namespace OIMInformationTool2.Controllers
             {
                 return NotFound();
             }
-            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "Descripcion", output.OutcomeId);
+            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "IdOutcome", output.OutcomeId);
             return View(output);
         }
 
@@ -104,7 +102,6 @@ namespace OIMInformationTool2.Controllers
                 try
                 {
                     _context.Update(output);
-                    TempData["alertMessage"] = "Editado con éxito";
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -120,7 +117,7 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "Descripcion", output.OutcomeId);
+            ViewData["OutcomeId"] = new SelectList(_context.Outcomes, "IdOutcome", "IdOutcome", output.OutcomeId);
             return View(output);
         }
 
@@ -156,7 +153,6 @@ namespace OIMInformationTool2.Controllers
             if (output != null)
             {
                 _context.Outputs.Remove(output);
-                TempData["alertMessage"] = "Eliminado con éxito";
             }
             
             await _context.SaveChangesAsync();
@@ -167,30 +163,5 @@ namespace OIMInformationTool2.Controllers
         {
           return _context.Outputs.Any(e => e.IdOutput == id);
         }
-
-
-        // ************************************************************************************
-        // ******************************CREATED FUNCTIONS************************************* 
-        // ************************************************************************************ 
-
-        public IActionResult saveToExcel()
-        {
-            ExcelManager manager = new ExcelManager();
-            DownloadManager download = new DownloadManager();
-
-
-            var listado = _context.Outputs.Include(o => o.Outcome).ToList();
-
-            String fileName = "Files/Output.xlsx";
-
-            manager.saveExcelFile(listado, fileName);
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            var stream = new FileStream(path, FileMode.Open);
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-
-
-        }
-
     }
 }

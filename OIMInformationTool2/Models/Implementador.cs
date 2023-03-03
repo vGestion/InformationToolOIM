@@ -9,5 +9,5 @@ public partial class Implementador
 
     public string? Descripcion { get; set; }
 
-    public virtual ICollection<Indicador> Indicadors { get; } = new List<Indicador>();
+    public virtual ICollection<Actividad> Actividads { get; } = new List<Actividad>();
 }

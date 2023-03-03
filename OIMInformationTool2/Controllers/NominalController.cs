@@ -1,10 +1,11 @@
-﻿using InformationToolOIM2.Utils;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
-using OIMInformationTool2.Utils;
-using System.Data;
 
 namespace OIMInformationTool2.Controllers
 {
@@ -55,16 +56,16 @@ namespace OIMInformationTool2.Controllers
         // GET: Nominal/Create
         public IActionResult Create()
         {
-            ViewData["CondicionEspId"] = new SelectList(_context.CondicionEsps, "IdCondicionEsp", "Descripcion");
-            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "Descripcion");
-            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "Descripcion");
-            ViewData["IdentSexualId"] = new SelectList(_context.IdentSexuals, "IdIdentSexual", "Descripcion");
-            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "Descripcion");
-            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "Descripcion");
-            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "Descripcion");
-            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "Descripcion");
-            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "Descripcion");
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre");
+            ViewData["CondicionEspId"] = new SelectList(_context.CondicionEsps, "IdCondicionEsp", "IdCondicionEsp");
+            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "IdCriterioMovi");
+            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "IdGenero");
+            ViewData["IdentSexualId"] = new SelectList(_context.IdentSexuals, "IdIdentSexual", "IdIdentSexual");
+            ViewData["IndicadorId"] = new SelectList(_context.Actividads, "IdActividad", "IdActividad");
+            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "IdNacionalidad");
+            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "IdParentezco");
+            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "IdPeriodo");
+            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "IdSexo");
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario");
             return View();
         }
 
@@ -73,7 +74,7 @@ namespace OIMInformationTool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdNominal,FechaAsistencia,FechaCorte,Edad,Discapacidad,Monto,FechaRegistro,IndicadorId,SexoId,NacionalidadId,CantonId,ProvinciaId,ParentezcoId,CriterioMoviId,PeriodoId,UsuarioId,IdentSexualId,CondicionEspId,GeneroId")] Nominal nominal)
+        public async Task<IActionResult> Create([Bind("IdNominal,FechaAsistencia,FechaCorte,Edad,Discapacidad,Monto,FechaRegistro,IndicadorId,SexoId,NacionalidadId,CantonId,ProvinciaId,ParentezcoId,CriterioMoviId,PeriodoId,UsuarioId,CondicionEspId,IdentSexualId,GeneroId")] Nominal nominal)
         {
             if (ModelState.IsValid)
             {
@@ -81,16 +82,16 @@ namespace OIMInformationTool2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CondicionEspId"] = new SelectList(_context.CondicionEsps, "IdCondicionEsp", "Descripcion", nominal.CondicionEspId);
-            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "Descripcion", nominal.CriterioMoviId);
-            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "Descripcion", nominal.GeneroId);
-            ViewData["IdentSexualId"] = new SelectList(_context.IdentSexuals, "IdIdentSexual", "Descripcion", nominal.IdentSexualId);
-            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "Descripcion", nominal.IndicadorId);
-            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "Descripcion", nominal.NacionalidadId);
-            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "Descripcion", nominal.ParentezcoId);
-            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "Descripcion", nominal.PeriodoId);
-            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "Descripcion", nominal.SexoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", nominal.UsuarioId);
+            ViewData["CondicionEspId"] = new SelectList(_context.CondicionEsps, "IdCondicionEsp", "IdCondicionEsp", nominal.CondicionEspId);
+            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "IdCriterioMovi", nominal.CriterioMoviId);
+            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "IdGenero", nominal.GeneroId);
+            ViewData["IdentSexualId"] = new SelectList(_context.IdentSexuals, "IdIdentSexual", "IdIdentSexual", nominal.IdentSexualId);
+            ViewData["IndicadorId"] = new SelectList(_context.Actividads, "IdActividad", "IdActividad", nominal.IndicadorId);
+            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "IdNacionalidad", nominal.NacionalidadId);
+            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "IdParentezco", nominal.ParentezcoId);
+            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "IdPeriodo", nominal.PeriodoId);
+            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "IdSexo", nominal.SexoId);
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", nominal.UsuarioId);
             return View(nominal);
         }
 
@@ -107,16 +108,16 @@ namespace OIMInformationTool2.Controllers
             {
                 return NotFound();
             }
-            ViewData["CondicionEspId"] = new SelectList(_context.CondicionEsps, "IdCondicionEsp", "Descripcion", nominal.CondicionEspId);
-            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "Descripcion", nominal.CriterioMoviId);
-            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "Descripcion", nominal.GeneroId);
-            ViewData["IdentSexualId"] = new SelectList(_context.IdentSexuals, "IdIdentSexual", "Descripcion", nominal.IdentSexualId);
-            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "Descripcion", nominal.IndicadorId);
-            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "Descripcion", nominal.NacionalidadId);
-            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "Descripcion", nominal.ParentezcoId);
-            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "Descripcion", nominal.PeriodoId);
-            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "Descripcion", nominal.SexoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", nominal.UsuarioId);
+            ViewData["CondicionEspId"] = new SelectList(_context.CondicionEsps, "IdCondicionEsp", "IdCondicionEsp", nominal.CondicionEspId);
+            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "IdCriterioMovi", nominal.CriterioMoviId);
+            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "IdGenero", nominal.GeneroId);
+            ViewData["IdentSexualId"] = new SelectList(_context.IdentSexuals, "IdIdentSexual", "IdIdentSexual", nominal.IdentSexualId);
+            ViewData["IndicadorId"] = new SelectList(_context.Actividads, "IdActividad", "IdActividad", nominal.IndicadorId);
+            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "IdNacionalidad", nominal.NacionalidadId);
+            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "IdParentezco", nominal.ParentezcoId);
+            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "IdPeriodo", nominal.PeriodoId);
+            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "IdSexo", nominal.SexoId);
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", nominal.UsuarioId);
             return View(nominal);
         }
 
@@ -125,7 +126,7 @@ namespace OIMInformationTool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdNominal,FechaAsistencia,FechaCorte,Edad,Discapacidad,Monto,FechaRegistro,IndicadorId,SexoId,NacionalidadId,CantonId,ProvinciaId,ParentezcoId,CriterioMoviId,PeriodoId,UsuarioId,IdentSexualId,CondicionEspId,GeneroId")] Nominal nominal)
+        public async Task<IActionResult> Edit(int id, [Bind("IdNominal,FechaAsistencia,FechaCorte,Edad,Discapacidad,Monto,FechaRegistro,IndicadorId,SexoId,NacionalidadId,CantonId,ProvinciaId,ParentezcoId,CriterioMoviId,PeriodoId,UsuarioId,CondicionEspId,IdentSexualId,GeneroId")] Nominal nominal)
         {
             if (id != nominal.IdNominal)
             {
@@ -152,16 +153,16 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CondicionEspId"] = new SelectList(_context.CondicionEsps, "IdCondicionEsp", "Descripcion", nominal.CondicionEspId);
-            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "Descripcion", nominal.CriterioMoviId);
-            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "Descripcion", nominal.GeneroId);
-            ViewData["IdentSexualId"] = new SelectList(_context.IdentSexuals, "IdIdentSexual", "Descripcion", nominal.IdentSexualId);
-            ViewData["IndicadorId"] = new SelectList(_context.Indicadors, "IdIndicador", "Descripcion", nominal.IndicadorId);
-            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "Descripcion", nominal.NacionalidadId);
-            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "Descripcion", nominal.ParentezcoId);
-            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "Descripcion", nominal.PeriodoId);
-            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "Descripcion", nominal.SexoId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", nominal.UsuarioId);
+            ViewData["CondicionEspId"] = new SelectList(_context.CondicionEsps, "IdCondicionEsp", "IdCondicionEsp", nominal.CondicionEspId);
+            ViewData["CriterioMoviId"] = new SelectList(_context.CriterioMovis, "IdCriterioMovi", "IdCriterioMovi", nominal.CriterioMoviId);
+            ViewData["GeneroId"] = new SelectList(_context.Generos, "IdGenero", "IdGenero", nominal.GeneroId);
+            ViewData["IdentSexualId"] = new SelectList(_context.IdentSexuals, "IdIdentSexual", "IdIdentSexual", nominal.IdentSexualId);
+            ViewData["IndicadorId"] = new SelectList(_context.Actividads, "IdActividad", "IdActividad", nominal.IndicadorId);
+            ViewData["NacionalidadId"] = new SelectList(_context.Nacionalidads, "IdNacionalidad", "IdNacionalidad", nominal.NacionalidadId);
+            ViewData["ParentezcoId"] = new SelectList(_context.Parentezcos, "IdParentezco", "IdParentezco", nominal.ParentezcoId);
+            ViewData["PeriodoId"] = new SelectList(_context.Periodos, "IdPeriodo", "IdPeriodo", nominal.PeriodoId);
+            ViewData["SexoId"] = new SelectList(_context.Sexos, "IdSexo", "IdSexo", nominal.SexoId);
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", nominal.UsuarioId);
             return View(nominal);
         }
 
@@ -216,221 +217,5 @@ namespace OIMInformationTool2.Controllers
         {
           return _context.Nominals.Any(e => e.IdNominal == id);
         }
-
-
-        // ************************************************************************************
-        // ******************************CREATED FUNCTIONS************************************* 
-        // ************************************************************************************
-
-        public ActionResult InsertFromExcel()
-        {
-            string Path = this.HttpContext.Session.GetString("archivo");
-            // Reading information from excel sheet
-            ExcelManager reader = new ExcelManager();
-            DataSet data = reader.readExcelSheet(Path);
-
-            Boolean valido = true;
-            // Inserting information into database
-            int i = 0;
-            String error = "";
-
-            if (_context.Periodos.Where(r => r.Activo == true).ToList().Count() == 0)
-            {
-
-                TempData["alertMessage"] = "No existe un periodo activo";
-            }
-            else
-            {
-                foreach (DataRow dr in data.Tables[0].Rows)
-                {
-
-                    if ((dr["ID_INDICADOR"].ToString() == "") && (dr["FECHA_ASISTENCIA"].ToString() == "") && (dr["CORTE"].ToString() == "") && (dr["EDAD"].ToString() == "") && (dr["DISCAPACIDAD"].ToString() == "") && (dr["MONTO_ECONOMICO"].ToString() == "")
-                    && (dr["ID_GENERO"].ToString() == "") && (dr["SEXO"].ToString() == "") && (dr["NACIONALIDAD"].ToString() == "") && (dr["ID_CANTON"].ToString() == "") && (dr["PARENTEZCO"].ToString() == "") && (dr["CRITERIO_MOVILIDAD"].ToString() == "")
-                    && (dr["IDENTIDAD_SEXUAL"].ToString() == "") && (dr["CONDICION"].ToString() == ""))
-                    {
-
-                        break;
-                    }
-
-                    i = i + 1;
-
-                    if ((dr["ID_INDICADOR"].ToString() == ""))
-                    {
-                        error = error + "La columna INDICADOR está vacía en la fila " + i + " *** ";
-                        valido = false;
-                    }
-
-                    if ((dr["FECHA_ASISTENCIA"].ToString() == ""))
-                    {
-                        error = error + "La columna FECHA_ASISTENCIA está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-
-                    if ((dr["CORTE"].ToString() == ""))
-                    {
-                        error = error + "La columna CORTE está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-
-                    if ((dr["EDAD"].ToString() == ""))
-                    {
-                        error = error + "La columna EDAD está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-
-                    if ((dr["DISCAPACIDAD"].ToString() == ""))
-                    {
-                        error = error + "La columna DISCAPACIDAD está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-                    if ((dr["MONTO_ECONOMICO"].ToString() == ""))
-                    {
-                        error = error + "La columna MONTO está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-                    if ((dr["ID_GENERO"].ToString() == ""))
-                    {
-                        error = error + "La columna GENERO está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-                    if ((dr["SEXO"].ToString() == ""))
-                    {
-                        error = error + "La columna SEXO está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-                    if ((dr["NACIONALIDAD"].ToString() == ""))
-                    {
-                        error = error + "La columna NACIONALIDAD está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-                    if ((dr["ID_CANTON"].ToString() == ""))
-                    {
-                        error = error + "La columna CANTON está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-                    if ((dr["PARENTEZCO"].ToString() == ""))
-                    {
-                        error = error + "La columna PARENTEZCO está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-                    if (dr["CRITERIO_MOVILIDAD"].ToString() == "")
-                    {
-                        error = error + "La columna CRITERIO_MOVILIDAD está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-                    if (dr["IDENTIDAD_SEXUAL"].ToString() == "")
-                    {
-                        error = error + "La columna IDENTIDAD_SEXUAL está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-                    if (dr["IDENTIDAD_SEXUAL"].ToString() == "")
-                    {
-                        error = error + "La columna IDENTIDAD_SEXUAL está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-                    if (dr["CONDICION"].ToString() == "")
-                    {
-                        error = error + "La columna IDENTIDAD_SEXUAL está vacía en la fila" + i + " *** ";
-                        valido = false;
-                    }
-
-                }
-
-                if (valido == false)
-                {
-                    TempData["alertMessage"] = error;
-                }
-                else
-                {
-                    foreach (DataRow dr in data.Tables[0].Rows)
-                    {
-
-                        if ((dr["ID_INDICADOR"].ToString() == "") && (dr["FECHA_ASISTENCIA"].ToString() == "") && (dr["CORTE"].ToString() == "") && (dr["EDAD"].ToString() == "") && (dr["DISCAPACIDAD"].ToString() == "") && (dr["MONTO_ECONOMICO"].ToString() == "")
-                        && (dr["ID_GENERO"].ToString() == "") && (dr["SEXO"].ToString() == "") && (dr["NACIONALIDAD"].ToString() == "") && (dr["ID_CANTON"].ToString() == "") && (dr["PARENTEZCO"].ToString() == "") && (dr["CRITERIO_MOVILIDAD"].ToString() == ""))
-                        {
-
-                            break;
-                        }
-
-                        Finders find = new Finders();
-                        Nominal nominal = new Nominal();
-
-                        nominal.FechaAsistencia = DateTime.Parse(dr["FECHA_ASISTENCIA"].ToString());
-                        nominal.FechaCorte = DateTime.Parse(dr["CORTE"].ToString()); 
-                        nominal.IdentSexualId = (int)Convert.ToInt64(dr["IDENTIDAD_SEXUAL"].ToString());
-                        nominal.Edad = (int)Convert.ToInt64(dr["EDAD"].ToString());
-                        nominal.Discapacidad = find.DiscapacidadTranformer(dr["DISCAPACIDAD"].ToString());
-                        nominal.Monto = Convert.ToDecimal(dr["MONTO_ECONOMICO"].ToString());
-                        nominal.FechaRegistro = DateTime.Now;
-                        nominal.IndicadorId = dr["ID_INDICADOR"].ToString();
-                        nominal.CondicionEspId =  (int)Convert.ToInt64(dr["CONDICION"].ToString());
-                        nominal.GeneroId = (int)Convert.ToInt64(dr["ID_GENERO"].ToString());
-                        nominal.SexoId = find.IdFinderSexo(dr["SEXO"].ToString(), _context.Sexos.ToList());
-                        nominal.ParentezcoId = find.IdFinderParentezco(dr["PARENTEZCO"].ToString(), _context.Parentezcos.ToList());
-                        nominal.NacionalidadId = find.IdFinderNacionalidad(dr["NACIONALIDAD"].ToString(), _context.Nacionalidads.ToList());
-                        nominal.CantonId = (int)Convert.ToInt64(dr["ID_CANTON"].ToString().Substring(0, 2));
-                        nominal.ProvinciaId = (int)Convert.ToInt64(dr["ID_CANTON"].ToString().Substring(2, 2));
-                        nominal.CriterioMoviId = find.IdFinderCriterioMovilidad(dr["CRITERIO_MOVILIDAD"].ToString(), _context.CriterioMovis.ToList());
-                        nominal.PeriodoId = _context.Periodos.FromSql($"Select * from dbo.Periodo where Activo = 1").ToList()[0].IdPeriodo;
-                        nominal.UsuarioId = (int)Convert.ToInt64(HttpContext.Session.GetString("usuarioId")); ;
-                        nominal.IdNominal = _context.Nominals.ToList().Count() + 1;
-
-                        _context.Add(nominal);
-                        _context.SaveChanges();
-                    }
-
-                    TempData["alertMessage"] = "Los datos se han ingresado correctamente";
-
-                }
-            }
-
-
-
-
-
-            if (System.IO.File.Exists(Path))
-            {
-                try
-                {
-                    System.IO.File.Delete(Path);
-                }
-                catch (System.IO.IOException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-
-            return RedirectToAction("Index");
-        }
-
-
-        public IActionResult saveToExcel()
-        {
-            ExcelManager manager = new ExcelManager();
-            DownloadManager download = new DownloadManager();
-
-            var listado = _context.Nominals
-                .Include(n => n.CriterioMovi)
-                .Include(n => n.Genero)
-                .Include(n => n.Indicador)
-                .Include(n => n.Nacionalidad)
-                .Include(n => n.Parentezco)
-                .Include(n => n.Periodo)
-                .Include(n => n.Sexo)
-                .Include(n => n.Usuario).ToList();
-
-            String fileName = "Files/nominal.xlsx";
-
-            manager.saveExcelFile(listado, fileName);
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            var stream = new FileStream(path, FileMode.Open);
-
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-
-
-        }
-
-
     }
 }

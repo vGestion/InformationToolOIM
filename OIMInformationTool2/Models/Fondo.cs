@@ -15,7 +15,7 @@ public partial class Fondo
 
     public DateTime? FechaFin { get; set; }
 
-    public virtual Donante? Donante { get; set; }
+    public virtual ICollection<Actividad> Actividads { get; } = new List<Actividad>();
 
-    public virtual ICollection<Indicador> Indicadors { get; } = new List<Indicador>();
+    public virtual Donante? Donante { get; set; }
 }

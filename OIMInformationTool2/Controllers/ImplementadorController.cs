@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
-using OIMInformationTool2.Utils;
 
 namespace OIMInformationTool2.Controllers
 {
@@ -22,7 +21,7 @@ namespace OIMInformationTool2.Controllers
         // GET: Implementador
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Implementadors.ToListAsync());
+              return View(await _context.Implementadors.ToListAsync());
         }
 
         // GET: Implementador/Details/5
@@ -141,43 +140,21 @@ namespace OIMInformationTool2.Controllers
         {
             if (_context.Implementadors == null)
             {
-                return Problem("Entity set 'Oim2Context.Implementadors'  is null.");
+                return Problem("Entity set 'OimContext.Implementadors'  is null.");
             }
             var implementador = await _context.Implementadors.FindAsync(id);
             if (implementador != null)
             {
                 _context.Implementadors.Remove(implementador);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ImplementadorExists(int id)
         {
-            return _context.Implementadors.Any(e => e.IdImplementador == id);
-        }
-
-        // ************************************************************************************
-        // ******************************CREATED FUNCTIONS************************************* 
-        // ************************************************************************************ 
-
-        public IActionResult saveToExcel()
-        {
-            ExcelManager manager = new ExcelManager();
-            DownloadManager download = new DownloadManager();
-
-
-            var listado = _context.Implementadors.ToList();
-
-            String fileName = "Files/Implementadores.xlsx";
-
-            manager.saveExcelFile(listado, fileName);
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            var stream = new FileStream(path, FileMode.Open);
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-
+          return _context.Implementadors.Any(e => e.IdImplementador == id);
         }
     }
 }

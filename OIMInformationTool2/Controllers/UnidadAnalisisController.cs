@@ -47,7 +47,7 @@ namespace OIMInformationTool2.Controllers
         // GET: UnidadAnalisis/Create
         public IActionResult Create()
         {
-            ViewData["TipoUaId"] = new SelectList(_context.TipoUas, "IdTipoUa", "Descripcion");
+            ViewData["TipoUaId"] = new SelectList(_context.TipoUas, "IdTipoUa", "IdTipoUa");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace OIMInformationTool2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoUaId"] = new SelectList(_context.TipoUas, "IdTipoUa", "Descripcion", unidadAnalisi.TipoUaId);
+            ViewData["TipoUaId"] = new SelectList(_context.TipoUas, "IdTipoUa", "IdTipoUa", unidadAnalisi.TipoUaId);
             return View(unidadAnalisi);
         }
 
@@ -81,7 +81,7 @@ namespace OIMInformationTool2.Controllers
             {
                 return NotFound();
             }
-            ViewData["TipoUaId"] = new SelectList(_context.TipoUas, "IdTipoUa", "Descripcion", unidadAnalisi.TipoUaId);
+            ViewData["TipoUaId"] = new SelectList(_context.TipoUas, "IdTipoUa", "IdTipoUa", unidadAnalisi.TipoUaId);
             return View(unidadAnalisi);
         }
 
@@ -117,7 +117,7 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoUaId"] = new SelectList(_context.TipoUas, "IdTipoUa", "Descripcion", unidadAnalisi.TipoUaId);
+            ViewData["TipoUaId"] = new SelectList(_context.TipoUas, "IdTipoUa", "IdTipoUa", unidadAnalisi.TipoUaId);
             return View(unidadAnalisi);
         }
 

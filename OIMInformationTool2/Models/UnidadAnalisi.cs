@@ -7,11 +7,12 @@ public partial class UnidadAnalisi
 {
     public int IdUa { get; set; }
 
-    public string Descripcion { get; set; } = null!;
+    public string? Descripcion { get; set; }
 
-    public int TipoUaId { get; set; }
+    public int? TipoUaId { get; set; }
 
-    public virtual ICollection<Indicador> Indicadors { get; } = new List<Indicador>();
+    public virtual ICollection<Actividad> Actividads { get; } = new List<Actividad>();
 
-    public virtual TipoUa TipoUa { get; set; } = null!;
+    public virtual TipoUa? TipoUa { get; set; }
 }
+

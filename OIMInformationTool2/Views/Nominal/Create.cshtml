@@ -9,15 +9,6 @@
 <h4>Nominal</h4>
 <hr />
 <div class="row">
-    <form method="post" enctype="multipart/form-data" asp-action="Index" asp-controller="FileUpload">
-        <input type="file" name="files" multiple />
-        <input type="submit" value="Cargar" />
-    </form>
-
-</div>
-<hr />
-
-<div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -95,12 +86,12 @@
                 <select asp-for="UsuarioId" class ="form-control" asp-items="ViewBag.UsuarioId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="IdentSexualId" class="control-label"></label>
-                <select asp-for="IdentSexualId" class ="form-control" asp-items="ViewBag.IdentSexualId"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="CondicionEspId" class="control-label"></label>
                 <select asp-for="CondicionEspId" class ="form-control" asp-items="ViewBag.CondicionEspId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdentSexualId" class="control-label"></label>
+                <select asp-for="IdentSexualId" class ="form-control" asp-items="ViewBag.IdentSexualId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="GeneroId" class="control-label"></label>
@@ -116,3 +107,7 @@
 <div>
     <a asp-action="Index">Regresar a la lista</a>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

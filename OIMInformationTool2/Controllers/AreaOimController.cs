@@ -7,9 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InformationToolOIM2.Models;
 using OIMInformationTool2.Models;
-using OIMInformationTool2.Utils;
-using ExcelDataReader.Log;
-using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace OIMInformationTool2.Controllers
 {
@@ -160,30 +157,5 @@ namespace OIMInformationTool2.Controllers
         {
           return _context.AreaOims.Any(e => e.IdAreaOim == id);
         }
-
-
-        // ************************************************************************************
-        // ******************************CREATED FUNCTIONS************************************* 
-        // ************************************************************************************ 
-
-        public IActionResult saveToExcel()
-        {
-            ExcelManager manager = new ExcelManager();
-            DownloadManager download = new DownloadManager();
-
-
-            var listado = _context.AreaOims.ToList();
-
-            String fileName = "Files/areasP.xlsx";
-
-            manager.saveExcelFile(listado, fileName);
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            var stream = new FileStream(path, FileMode.Open);
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-
-
-        }
-
     }
 }

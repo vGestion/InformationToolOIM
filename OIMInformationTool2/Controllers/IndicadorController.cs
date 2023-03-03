@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
@@ -17,7 +21,7 @@ namespace OIMInformationTool2.Controllers
         // GET: Indicador
         public async Task<IActionResult> Index()
         {
-            var oimContext = _context.Indicadors.Include(i => i.Fondo).Include(i => i.Implementador).Include(i => i.Output).Include(i => i.Periodicidad).Include(i => i.Ua);
+            var oimContext = _context.Indicadors.Include(i => i.Output);
             return View(await oimContext.ToListAsync());
         }
 
@@ -30,11 +34,7 @@ namespace OIMInformationTool2.Controllers
             }
 
             var indicador = await _context.Indicadors
-                .Include(i => i.Fondo)
-                .Include(i => i.Implementador)
                 .Include(i => i.Output)
-                .Include(i => i.Periodicidad)
-                .Include(i => i.Ua)
                 .FirstOrDefaultAsync(m => m.IdIndicador == id);
             if (indicador == null)
             {
@@ -47,11 +47,7 @@ namespace OIMInformationTool2.Controllers
         // GET: Indicador/Create
         public IActionResult Create()
         {
-            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "Descripcion");
-            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion");
-            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion");
-            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "Descripcion");
-            ViewData["UaId"] = new SelectList(_context.UnidadAnalises, "IdUa", "Descripcion");
+            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "IdOutput");
             return View();
         }
 
@@ -60,7 +56,7 @@ namespace OIMInformationTool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdIndicador,Descripcion,FondoId,Meta,OutputId,NumeroTotal,CampoReferencia,FormulaCalculo,ImplementadorId,UaId,PeriodicidadId")] Indicador indicador)
+        public async Task<IActionResult> Create([Bind("IdIndicador,Descripcion,OutputId")] Indicador indicador)
         {
             if (ModelState.IsValid)
             {
@@ -68,11 +64,7 @@ namespace OIMInformationTool2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "Descripcion", indicador.FondoId);
-            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion", indicador.ImplementadorId);
-            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion", indicador.OutputId);
-            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "Descripcion", indicador.PeriodicidadId);
-            ViewData["UaId"] = new SelectList(_context.UnidadAnalises, "IdUa", "Descripcion", indicador.UaId);
+            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "IdOutput", indicador.OutputId);
             return View(indicador);
         }
 
@@ -89,11 +81,7 @@ namespace OIMInformationTool2.Controllers
             {
                 return NotFound();
             }
-            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "Descripcion", indicador.FondoId);
-            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion", indicador.ImplementadorId);
-            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion", indicador.OutputId);
-            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "Descripcion", indicador.PeriodicidadId);
-            ViewData["UaId"] = new SelectList(_context.UnidadAnalises, "IdUa", "Descripcion", indicador.UaId);
+            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "IdOutput", indicador.OutputId);
             return View(indicador);
         }
 
@@ -102,7 +90,7 @@ namespace OIMInformationTool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("IdIndicador,Descripcion,FondoId,Meta,OutputId,NumeroTotal,CampoReferencia,FormulaCalculo,ImplementadorId,UaId,PeriodicidadId")] Indicador indicador)
+        public async Task<IActionResult> Edit(string id, [Bind("IdIndicador,Descripcion,OutputId")] Indicador indicador)
         {
             if (id != indicador.IdIndicador)
             {
@@ -129,11 +117,7 @@ namespace OIMInformationTool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FondoId"] = new SelectList(_context.Fondos, "IdFondo", "Descripcion", indicador.FondoId);
-            ViewData["ImplementadorId"] = new SelectList(_context.Implementadors, "IdImplementador", "Descripcion", indicador.ImplementadorId);
-            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "Descripcion", indicador.OutputId);
-            ViewData["PeriodicidadId"] = new SelectList(_context.Periodicidads, "IdPeriodo", "Descripcion", indicador.PeriodicidadId);
-            ViewData["UaId"] = new SelectList(_context.UnidadAnalises, "IdUa", "Descripcion", indicador.UaId);
+            ViewData["OutputId"] = new SelectList(_context.Outputs, "IdOutput", "IdOutput", indicador.OutputId);
             return View(indicador);
         }
 
@@ -146,11 +130,7 @@ namespace OIMInformationTool2.Controllers
             }
 
             var indicador = await _context.Indicadors
-                .Include(i => i.Fondo)
-                .Include(i => i.Implementador)
                 .Include(i => i.Output)
-                .Include(i => i.Periodicidad)
-                .Include(i => i.Ua)
                 .FirstOrDefaultAsync(m => m.IdIndicador == id);
             if (indicador == null)
             {

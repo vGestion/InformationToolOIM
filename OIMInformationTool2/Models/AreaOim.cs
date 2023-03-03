@@ -1,4 +1,5 @@
-﻿using OIMInformationTool2.Models;
+﻿using OIMInformationTool2;
+using OIMInformationTool2.Models;
 
 namespace InformationToolOIM2.Models;
 
@@ -8,5 +9,5 @@ public partial class AreaOim
 
     public string? Descripcion { get; set; }
 
-    public virtual ICollection<Outcome> Outcomes { get; } = new List<Outcome>();
+    public virtual ICollection<Actividad> Actividads { get; } = new List<Actividad>();
 }

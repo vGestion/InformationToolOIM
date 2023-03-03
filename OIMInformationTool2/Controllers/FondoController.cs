@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OIMInformationTool2.Models;
-using OIMInformationTool2.Utils;
 
 namespace OIMInformationTool2.Controllers
 {
@@ -18,8 +21,8 @@ namespace OIMInformationTool2.Controllers
         // GET: Fondo
         public async Task<IActionResult> Index()
         {
-            var oim2Context = _context.Fondos.Include(f => f.Donante);
-            return View(await oim2Context.ToListAsync());
+            var oimContext = _context.Fondos.Include(f => f.Donante);
+            return View(await oimContext.ToListAsync());
         }
 
         // GET: Fondo/Details/5
@@ -144,44 +147,21 @@ namespace OIMInformationTool2.Controllers
         {
             if (_context.Fondos == null)
             {
-                return Problem("Entity set 'Oim2Context.Fondos'  is null.");
+                return Problem("Entity set 'OimContext.Fondos'  is null.");
             }
             var fondo = await _context.Fondos.FindAsync(id);
             if (fondo != null)
             {
                 _context.Fondos.Remove(fondo);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool FondoExists(string id)
         {
-            return _context.Fondos.Any(e => e.IdFondo == id);
-        }
-
-        // ************************************************************************************
-        // ******************************CREATED FUNCTIONS************************************* 
-        // ************************************************************************************ 
-
-        public IActionResult saveToExcel()
-        {
-            ExcelManager manager = new ExcelManager();
-            DownloadManager download = new DownloadManager();
-
-
-            var listado = _context.Fondos.ToList();
-
-            String fileName = "Files/Fondos.xlsx";
-
-            manager.saveExcelFile(listado, fileName);
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            var stream = new FileStream(path, FileMode.Open);
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-
-
+          return _context.Fondos.Any(e => e.IdFondo == id);
         }
     }
 }

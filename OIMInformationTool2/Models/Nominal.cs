@@ -39,9 +39,9 @@ public partial class Nominal
 
     public int? UsuarioId { get; set; }
 
-    public int? IdentSexualId { get; set; }
-
     public int? CondicionEspId { get; set; }
+
+    public int? IdentSexualId { get; set; }
 
     public int? GeneroId { get; set; }
 
@@ -53,7 +53,7 @@ public partial class Nominal
 
     public virtual IdentSexual? IdentSexual { get; set; }
 
-    public virtual Indicador? Indicador { get; set; }
+    public virtual Actividad? Indicador { get; set; }
 
     public virtual Nacionalidad? Nacionalidad { get; set; }
 

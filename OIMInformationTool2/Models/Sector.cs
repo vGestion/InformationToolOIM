@@ -1,4 +1,5 @@
-﻿using OIMInformationTool2.Models;
+﻿using OIMInformationTool2;
+using OIMInformationTool2.Models;
 using System;
 using System.Collections.Generic;
 
@@ -10,5 +11,5 @@ public partial class Sector
 
     public string? Descripcion { get; set; }
 
-    public virtual ICollection<Outcome> Outcomes { get; } = new List<Outcome>();
+    public virtual ICollection<Actividad> Actividads { get; } = new List<Actividad>();
 }

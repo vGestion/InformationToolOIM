@@ -351,7 +351,7 @@ namespace OIMInformationTool2.Utils
                 worksheet.Range(3, 1, 3, 8).Style.Font.SetFontColor(XLColor.White);
 
                 int j = 4;
-
+                /*
                 lista.ForEach(x =>
                 {
                     worksheet.Cell(j, 1).Value = x.IdIndicador;
@@ -363,7 +363,7 @@ namespace OIMInformationTool2.Utils
                     worksheet.Cell(j, 7).Value = x.Implementador.Descripcion;
                     worksheet.Cell(j, 8).Value = x.Periodicidad.Descripcion;
                     j++;
-                });
+                });*/
                 workbook.SaveAs(fileName);
             }
         }

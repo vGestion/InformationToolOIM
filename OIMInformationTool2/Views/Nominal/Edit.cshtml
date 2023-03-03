@@ -89,14 +89,14 @@
                 <span asp-validation-for="UsuarioId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdentSexualId" class="control-label"></label>
-                <select asp-for="IdentSexualId" class="form-control" asp-items="ViewBag.IdentSexualId"></select>
-                <span asp-validation-for="IdentSexualId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="CondicionEspId" class="control-label"></label>
                 <select asp-for="CondicionEspId" class="form-control" asp-items="ViewBag.CondicionEspId"></select>
                 <span asp-validation-for="CondicionEspId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdentSexualId" class="control-label"></label>
+                <select asp-for="IdentSexualId" class="form-control" asp-items="ViewBag.IdentSexualId"></select>
+                <span asp-validation-for="IdentSexualId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="GeneroId" class="control-label"></label>
@@ -104,7 +104,7 @@
                 <span asp-validation-for="GeneroId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Agregar" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -113,3 +113,7 @@
 <div>
     <a asp-action="Index">Regresar a la lista</a>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
