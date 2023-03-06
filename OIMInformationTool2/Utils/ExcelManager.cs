@@ -101,7 +101,7 @@ namespace OIMInformationTool2.Utils
                 worksheet.Cell(3, 4).Value = "Discapacidad";
                 worksheet.Cell(3, 5).Value = "Monto";
                 worksheet.Cell(3, 6).Value = "Fecha de registro";
-                worksheet.Cell(3, 7).Value = "Indicador";
+                worksheet.Cell(3, 7).Value = "Actividad";
                 worksheet.Cell(3, 8).Value = "Sexo";
                 worksheet.Cell(3, 9).Value = "Nacionalidad";
                 worksheet.Cell(3, 10).Value = "Cantón";
@@ -125,7 +125,7 @@ namespace OIMInformationTool2.Utils
                     worksheet.Cell(j, 4).Value = x.Discapacidad;
                     worksheet.Cell(j, 5).Value = x.Monto;
                     worksheet.Cell(j, 6).Value = x.FechaRegistro;
-                    worksheet.Cell(j, 7).Value = x.Indicador.Descripcion;
+                    worksheet.Cell(j, 7).Value = x.Actividad.Descripcion;
                     worksheet.Cell(j, 8).Value = x.Sexo.Descripcion;
                     worksheet.Cell(j, 9).Value = x.Nacionalidad.Descripcion;
                     worksheet.Cell(j, 10).Value = x.CantonId;
@@ -326,7 +326,7 @@ namespace OIMInformationTool2.Utils
                 workbook.SaveAs(fileName);
             }
         }
-        public void saveExcelFile(List<Indicador> lista, String fileName)
+        public void saveExcelFile(List<Actividad> lista, String fileName)
         {
 
             using (var workbook = new XLWorkbook())
@@ -351,19 +351,19 @@ namespace OIMInformationTool2.Utils
                 worksheet.Range(3, 1, 3, 8).Style.Font.SetFontColor(XLColor.White);
 
                 int j = 4;
-                /*
+                
                 lista.ForEach(x =>
                 {
-                    worksheet.Cell(j, 1).Value = x.IdIndicador;
+                    worksheet.Cell(j, 1).Value = x.IdActividad;
                     worksheet.Cell(j, 2).Value = x.Descripcion;
                     worksheet.Cell(j, 3).Value = x.Fondo.Descripcion; 
                     worksheet.Cell(j, 4).Value = x.Meta;
-                    worksheet.Cell(j, 5).Value = x.Output.Descripcion;
+                    worksheet.Cell(j, 5).Value = x.Indicador.Descripcion;
                     worksheet.Cell(j, 6).Value = x.NumeroTotal;
                     worksheet.Cell(j, 7).Value = x.Implementador.Descripcion;
                     worksheet.Cell(j, 8).Value = x.Periodicidad.Descripcion;
                     j++;
-                });*/
+                });
                 workbook.SaveAs(fileName);
             }
         }

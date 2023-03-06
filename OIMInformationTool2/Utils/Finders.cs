@@ -15,18 +15,15 @@ namespace InformationToolOIM2.Utils
             foreach (CriterioMovi cm in CriterioM)
             {
                 //If the giving gender is in the table, return its id and break the loop
-                if (cm.Descripcion.Contains(nombre))
+                if (helper.ReplaceAccents(cm.Descripcion).Contains(nombre))
                 {
                     id = cm.IdCriterioMovi;
+                    System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID********************");
                     break;
                 }
-                else if (cm.Descripcion.Contains("S/I"))
-                //If the giving gender is not in the table, return the id for 'OTRO' value
-                {
-                    id = cm.IdCriterioMovi;
-                }
+               
             }
-            System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID********************");
+            
             return id;
         }
         public int IdFinderGenero(String nombre, List<Genero> genero)
@@ -37,16 +34,12 @@ namespace InformationToolOIM2.Utils
             foreach (Genero Gen in genero)
             {
                 //If the giving gender is in the table, return its id and break the loop
-                if (Gen.Descripcion.Contains(nombre)) {
-                    id = Gen.IdGenero;
+                if (helper.ReplaceAccents(Gen.Descripcion).Contains(nombre)) {
+                    id = Gen.IdGenero; 
+                    System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID********************");
                     break;
-                } else if (Gen.Descripcion.Contains("OTRO"))
-                //If the giving gender is not in the table, return the id for 'OTRO' value
-                {
-                    id = Gen.IdGenero;
-                }
+                } 
             }
-            System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID********************");
             return id;
         }
 
@@ -58,18 +51,12 @@ namespace InformationToolOIM2.Utils
             foreach (IdentSexual Gen in lista)
             {
                 //If the giving gender is in the table, return its id and break the loop
-                if (Gen.Descripcion.Contains(nombre))
+                if (helper.ReplaceAccents(Gen.Descripcion).Contains(nombre))
                 {
                     id = Gen.IdIdentSexual;
                     break;
                 }
-                else if (Gen.Descripcion.Contains("OTRO"))
-                //If the giving gender is not in the table, return the id for 'OTRO' value
-                {
-                    id = Gen.IdIdentSexual;
-                }
             }
-           
             return id;
         }
 
@@ -81,18 +68,14 @@ namespace InformationToolOIM2.Utils
             foreach (Sexo Gen in lista)
             {
                 //If the giving gender is in the table, return its id and break the loop
-                if (Gen.Descripcion.Contains(nombre))
+                if (helper.ReplaceAccents(Gen.Descripcion).Contains(nombre))
                 {
                     id = Gen.IdSexo;
+                    System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID********************");
                     break;
                 }
-                else if (Gen.Descripcion.Contains("OTRO"))
-                //If the giving gender is not in the table, return the id for 'OTRO' value
-                {
-                    id = Gen.IdSexo;
-                }
             }
-            System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID********************");
+           
             return id;
         }
         public int IdFinderNacionalidad(String nombre, List<Nacionalidad> nacionalidad)
@@ -102,19 +85,15 @@ namespace InformationToolOIM2.Utils
             foreach (Nacionalidad Nac in nacionalidad)
             {
                 //If the giving gender is in the table, return its id and break the loop
-                if (Nac.Descripcion.Contains(nombre))
+                if (helper.ReplaceAccents(Nac.Descripcion).Contains(nombre))
                 {
                     id = Nac.IdNacionalidad;
+                    System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID ********************");
                     break;
-                }
-                else if (Nac.Descripcion.Contains("S/I"))
-                //If the giving gender is not in the table, return the id for 'OTRO' value
-                {
-                    id = Nac.IdNacionalidad;
                 }
             }
 
-            System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID ********************");
+            
             return id;
         }
         public int IdFinderParentezco(String nombre, List<Parentezco> parentezco)
@@ -124,18 +103,13 @@ namespace InformationToolOIM2.Utils
             foreach (Parentezco Par in parentezco)
             {
                 //If the giving gender is in the table, return its id and break the loop
-                if (Par.Descripcion.Contains(nombre))
+                if (helper.ReplaceAccents(Par.Descripcion).Contains(nombre))
                 {
                     id = Par.IdParentezco;
+                    System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID********************");
                     break;
                 }
-                else if ((Par.Descripcion.Contains("S/I")) | (Par.Descripcion.Contains("N/A")))
-                //If the giving gender is not in the table, return the id for 'OTRO' value
-                {
-                    id = Par.IdParentezco;
-                }
             }
-            System.Diagnostics.Debug.WriteLine(id.ToString() + " ENCONTRÉ EL ID********************");
             return id;
         }
         public bool DiscapacidadTranformer(String discapacidad)

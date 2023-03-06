@@ -1,8 +1,4 @@
 ﻿
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-
 namespace OIMInformationTool2.Models;
 
 public partial class Nominal
@@ -21,11 +17,11 @@ public partial class Nominal
 
     public DateTime FechaRegistro { get; set; }
 
-    public string? IndicadorId { get; set; }
+    public int? NacionalidadId { get; set; }
+
+    public string? ActividadId { get; set; }
 
     public int? SexoId { get; set; }
-
-    public int? NacionalidadId { get; set; }
 
     public int? CantonId { get; set; }
 
@@ -45,6 +41,8 @@ public partial class Nominal
 
     public int? GeneroId { get; set; }
 
+    public virtual Actividad? Actividad { get; set; }
+
     public virtual CondicionEsp? CondicionEsp { get; set; }
 
     public virtual CriterioMovi? CriterioMovi { get; set; }
@@ -52,8 +50,6 @@ public partial class Nominal
     public virtual Genero? Genero { get; set; }
 
     public virtual IdentSexual? IdentSexual { get; set; }
-
-    public virtual Actividad? Indicador { get; set; }
 
     public virtual Nacionalidad? Nacionalidad { get; set; }
 

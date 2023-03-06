@@ -44,19 +44,19 @@
                 <span asp-validation-for="FechaRegistro" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IndicadorId" class="control-label"></label>
-                <select asp-for="IndicadorId" class="form-control" asp-items="ViewBag.IndicadorId"></select>
-                <span asp-validation-for="IndicadorId" class="text-danger"></span>
+                <label asp-for="NacionalidadId" class="control-label"></label>
+                <select asp-for="NacionalidadId" class="form-control" asp-items="ViewBag.NacionalidadId"></select>
+                <span asp-validation-for="NacionalidadId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActividadId" class="control-label"></label>
+                <select asp-for="ActividadId" class="form-control" asp-items="ViewBag.ActividadId"></select>
+                <span asp-validation-for="ActividadId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SexoId" class="control-label"></label>
                 <select asp-for="SexoId" class="form-control" asp-items="ViewBag.SexoId"></select>
                 <span asp-validation-for="SexoId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NacionalidadId" class="control-label"></label>
-                <select asp-for="NacionalidadId" class="form-control" asp-items="ViewBag.NacionalidadId"></select>
-                <span asp-validation-for="NacionalidadId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CantonId" class="control-label"></label>
@@ -113,7 +113,3 @@
 <div>
     <a asp-action="Index">Regresar a la lista</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

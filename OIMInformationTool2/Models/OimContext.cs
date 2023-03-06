@@ -336,6 +336,10 @@ public partial class OimContext : DbContext
             entity.Property(e => e.IdNominal)
                 .ValueGeneratedNever()
                 .HasColumnName("ID_nominal");
+            entity.Property(e => e.ActividadId)
+                .HasMaxLength(15)
+                .IsFixedLength()
+                .HasColumnName("Actividad_id");
             entity.Property(e => e.CantonId).HasColumnName("Canton_id");
             entity.Property(e => e.CondicionEspId).HasColumnName("CondicionEsp_id");
             entity.Property(e => e.CriterioMoviId).HasColumnName("Criterio_movi_id");
@@ -350,10 +354,6 @@ public partial class OimContext : DbContext
                 .HasColumnName("Fecha_registro");
             entity.Property(e => e.GeneroId).HasColumnName("Genero_id");
             entity.Property(e => e.IdentSexualId).HasColumnName("IdentSexual_id");
-            entity.Property(e => e.IndicadorId)
-                .HasMaxLength(15)
-                .IsFixedLength()
-                .HasColumnName("Indicador_id");
             entity.Property(e => e.Monto).HasColumnType("money");
             entity.Property(e => e.NacionalidadId).HasColumnName("Nacionalidad_id");
             entity.Property(e => e.ParentezcoId).HasColumnName("Parentezco_id");
@@ -361,6 +361,11 @@ public partial class OimContext : DbContext
             entity.Property(e => e.ProvinciaId).HasColumnName("Provincia_id");
             entity.Property(e => e.SexoId).HasColumnName("Sexo_id");
             entity.Property(e => e.UsuarioId).HasColumnName("Usuario_id");
+
+            entity.HasOne(d => d.Actividad).WithMany(p => p.Nominals)
+                .HasForeignKey(d => d.ActividadId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("R_42");
 
             entity.HasOne(d => d.CondicionEsp).WithMany(p => p.Nominals)
                 .HasForeignKey(d => d.CondicionEspId)
@@ -378,14 +383,9 @@ public partial class OimContext : DbContext
                 .HasForeignKey(d => d.IdentSexualId)
                 .HasConstraintName("R_64");
 
-            entity.HasOne(d => d.Indicador).WithMany(p => p.Nominals)
-                .HasForeignKey(d => d.IndicadorId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("R_42");
-
             entity.HasOne(d => d.Nacionalidad).WithMany(p => p.Nominals)
                 .HasForeignKey(d => d.NacionalidadId)
-                .HasConstraintName("R_8");
+                .HasConstraintName("R_74");
 
             entity.HasOne(d => d.Parentezco).WithMany(p => p.Nominals)
                 .HasForeignKey(d => d.ParentezcoId)

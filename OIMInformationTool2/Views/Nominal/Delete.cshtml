@@ -6,7 +6,7 @@
 
 <h1>Eliminar</h1>
 
-<h3>¿Está seguro de eliminar este registro?</h3>
+<h3>¿Está seguro de eliminar el registro?</h3>
 <div>
     <h4>Nominal</h4>
     <hr />
@@ -60,6 +60,12 @@
             @Html.DisplayFor(model => model.ProvinciaId)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Actividad)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Actividad.IdActividad)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CondicionEsp)
         </dt>
         <dd class = "col-sm-10">
@@ -82,12 +88,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdentSexual.IdIdentSexual)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Indicador)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Indicador.IdActividad)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nacionalidad)

@@ -1,7 +1,4 @@
 ﻿using InformationToolOIM2.Models;
-using OIMInformationTool2.Models;
-using System;
-using System.Collections.Generic;
 
 namespace OIMInformationTool2.Models;
 
